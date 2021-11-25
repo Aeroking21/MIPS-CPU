@@ -6,7 +6,7 @@ module alu(
     output logic zero,
     output [0:31] out,
 );
-    always_ff @(posedge clk) begin
+    always_comb begin
         case(func_code):
         default: begin end
         6'b100000: out = a+b;// ADD
