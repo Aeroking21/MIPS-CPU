@@ -83,14 +83,15 @@ module MIPS5(
     assign shift = (funct[5:3] == 3'b0) ? 1 : 0; 
     assign funct_tail = funct[2:0]; 
     assign OP_tail = OP[2:0]; 
-
+    assign subtype = instr[15:13];
+    
     assign astart = instr[15:0]; 
 
 
 // ALU control definition 
     always_comb begin 
 
-        if (R==0) begin 
+        if (OP==R) begin 
             if (shift) begin 
                 ALU_code = {1'b1, funct_tail}; 
             end 
@@ -121,7 +122,7 @@ module MIPS5(
     assign write_enable = (OP == R OR subtype == Imm) ? 1 : 0; 
 // register file reading 
     assign op_1 = reg_file[reg_addr1]; 
-    assign op_2 = (R==0) ? reg_file[reg_addr2] : {16'b0, astart}; 
+    assign op_2 = (OP==R)) ? reg_file[reg_addr2] : {16'b0, astart}; 
     assign shamt = instr[10:7];
 
     assign reg_v0 = reg_file[2]; 
