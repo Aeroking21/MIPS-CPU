@@ -1,37 +1,35 @@
 module alu(
-    input [31:0] a,
-    input [31:0] b,
-    input logic clk,
-    input [3:0] shift_amount,
-    input [5:0] func_code, //opcode is always 0 for this module
-    output logic zero,
+    input [31:0] op1,
+    input [31:0] op2,
+    input [3:0] shamt,
+    input [5:0] alu_control, //opcode is always 0 for this module
     output [0:31] out,
 
 ); //Do shifts as well
     always_comb begin
-        case(func_code):
+        case(alu_control):
         default: begin end
-        6'b100000: out = a+b;// ADD
-        6'b100001: out = $unsigned(a) + $unsigned(b); //Unsigned ADD
-        6'b100100: out = a&b;//AND
-        6'b100111: out = (a~|b); //NOR
-        6'b100101: out = (a|b); //OR
+        4'b0000 = op1*op2; //MULT (gonna use an actual multiplier module once it's created)
+        //4'b1001 MULTU
+        //4'1101 = DIV
+        //4'1100 = DIVU
+        4'b0001: out = $unsigned(op1) + $unsigned(op2); //ADDU
+        4'b0010 = out = (op1<op2); //Set on less than SLY
+        4'b0100: out = op1&op2;//AND
+        4'b0101: out = (op1|op2); //OR
+        //4'b0111: out = Load upper immediate (Lui)
+        //4'b100111: out = (op1~|op2); //NOR (Doesn't exist in MIPS)
+      
         //6'b101010: out = //set on less than immediate
-        6'b101011: out = (a<b); //Set on less than
-        6'b100010: out = $unsigned(a) < $unsigned(b);
-        6'b100011: out = $unsigned(a) - $unsigned(b);
-        6'b100110: out = (a^b); //XOR
-        6'b111010: out = $signed(b) >>> shift_amount; //arithmetic shift right
-        6'b111100: out = b << shift_amount; //Logical Shift left/arithmetic shift left (same operation)
-        6'b111110: out = b >> shift_amount; //Logical Shift right.
-
-        zero = (out==0);
-
+        4'b0010: out = $unsigned(op1) < $unsigned(op2); //SLTU
+        4'b0011: out = $unsigned(op1) - $unsigned(op2); //SUBU
+        4'b0110: out = (op1^op2); //XOR
+        4'b1011: out = $signed(op2) >>> shamt; //arithmetic shift right
+        4'b0100: out = op2 << shamt; // SLL Logical Shift left/arithmetic shift left (same operation)
+        4'b1010: out = op2 >> shamt; //SRL Logical Shift right.
+        4'b0100: out = op2 << op1; // SLLV
+        4'b1010: out = op2 >> op1; //SRLV
     endcase
     end
 endmodule
-
-/*when opcode != 0{
-    implement all immediates, branches and jumps
-}*/ 
 
