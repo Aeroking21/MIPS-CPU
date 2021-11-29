@@ -1,6 +1,6 @@
-jal 39
+jal 0x2FF00005
 nop
-jal 58
+jal 0x2FF00004
 nop
 
 assert $ra = bfc00008
