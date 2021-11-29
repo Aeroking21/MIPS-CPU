@@ -1,6 +1,6 @@
 addiu $t0, $0, 0x0123
 not $s0, $t0
-bgez $s0, 14
+bgtz $s0, 14
 addu $v0, $0, $0
 
 
