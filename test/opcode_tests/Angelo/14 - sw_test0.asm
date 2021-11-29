@@ -1,5 +1,0 @@
-lui $s2 0xf000000f
-lw $s1 0x4($s2)
-sw $s1 0x4($s3)
-
-#assert (0x4($s3) == 0x4($s2))
