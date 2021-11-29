@@ -1,0 +1,4 @@
+lui $s1 0x01
+sll $s1 $s2 0x10
+
+#assert ($s2 = 0x100)

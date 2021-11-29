@@ -1,0 +1,4 @@
+lui $s1 0x001f
+sltiu $s1 $s2 0x001e
+
+#assert ($s2 == 0x0)
