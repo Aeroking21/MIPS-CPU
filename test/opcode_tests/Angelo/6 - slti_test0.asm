@@ -1,3 +1,0 @@
-lui $s1 0x40
-slti $s1 $s2 0x20
-#assert ($s2 == 0x1)
