@@ -1,5 +1,5 @@
 addiu $s0, $0, 0x0123
-bgez $0, 14
+blez $0, 14
 addu $v0, $0, $0
 
 
