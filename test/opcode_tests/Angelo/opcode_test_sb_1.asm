@@ -1,0 +1,6 @@
+
+
+lui $s1 0xff
+#assert ($s1 == 0xff)
+sb $s1 0x1($s2)
+#assert ($s2 == 0xff)

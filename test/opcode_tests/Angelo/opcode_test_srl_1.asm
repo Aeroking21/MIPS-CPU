@@ -1,0 +1,4 @@
+lui $s1 0x10
+srl $s1 $s2 0x1
+
+#assert ($s2 == 0x8)
