@@ -1,17 +1,23 @@
 module alu(
+    input clk,
     input [31:0] op1,
     input [31:0] op2,
     input [3:0] shamt,
     input [5:0] alu_control, //opcode is always 0 for this module
     output [0:31] out,
+    output [0:31] out2
 
-); //Do shifts as well
+); 
+    logic [31:0] a;
+    logic [31:0] b;
+    logic [0:31] high;
+    logic [0:31] low;
+
     always_comb begin
         case(alu_control):
         default: begin end
-        4'b0000 = op1*op2; //MULT (gonna use an actual multiplier module once it's created)
-        //4'b1001 MULTU
-        //4'1101 = DIV
+        4'b0000: begin out = low; out2 = high; end //MulT
+        4'b1101 out = a/b;
         //4'1100 = DIVU
         4'b0001: out = $unsigned(op1) + $unsigned(op2); //ADDU
         4'b0010 = out = (op1<op2); //Set on less than SLY
@@ -31,5 +37,6 @@ module alu(
         4'b1010: out = op2 >> op1; //SRLV
     endcase
     end
+    mult m(.clk(clk), .a(a), .b(b), .high(high), .low(low));
 endmodule
 
