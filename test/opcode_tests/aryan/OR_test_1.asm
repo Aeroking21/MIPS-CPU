@@ -1,0 +1,5 @@
+li $s0 0x2A
+li $s1 0x2b
+OR $v0.$s0.$s1
+
+assert $v0==0x2b
