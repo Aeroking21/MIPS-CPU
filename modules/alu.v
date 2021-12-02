@@ -4,28 +4,27 @@ module alu(
     input logic [31:0] op2,
     input logic [3:0] shamt,
     input logic [5:0] alu_control, //opcode is always 0 for this module
-    output logic [0:31] out,
-    output logic [0:31] out2
+    output logic [0:31] low,
+    output logic [0:31] high,
+    output logic [0:31] out
 
 ); 
     logic [31:0] a;
     logic [31:0] b;
-    logic [0:31] high;
-    logic [0:31] low;
+    logic [63:0] mult_out;
 
     always_comb begin
         case(alu_control):
         default: begin end
-        4'b0000: begin out = low; out2 = high; end //MulT
-        4'b1101 out = a/b;
-        //4'1100 = DIVU
+        4'b0000: mult_out = a*b;
+        4'b1101: out = a/b; //DIV
+        4'b1100: out = ($unsigned(op1)) / ($unsigned(op2)); //DIVU
         4'b0001: out = $unsigned(op1) + $unsigned(op2); //ADDU
-        4'b0010 = out = (op1<op2); //Set on less than SLY
+        4'b0010: out = (op1<op2); //Set on less than SLY
         4'b0100: out = op1&op2;//AND
         4'b0101: out = (op1|op2); //OR
         //4'b0111: out = Load upper immediate (Lui)
-        //4'b100111: out = (op1~|op2); //NOR (Doesn't exist in MIPS)
-      
+
         //6'b101010: out = //set on less than immediate
         4'b0010: out = $unsigned(op1) < $unsigned(op2); //SLTU
         4'b0011: out = $unsigned(op1) - $unsigned(op2); //SUBU
@@ -37,6 +36,9 @@ module alu(
         4'b1010: out = op2 >> op1; //SRLV
     endcase
     end
-    mult m(.clk(clk), .a(a), .b(b), .high(high), .low(low));
+
+    assign low = mult_out[31:0];
+    assign high = mult_out[63:32];
+
 endmodule
 
