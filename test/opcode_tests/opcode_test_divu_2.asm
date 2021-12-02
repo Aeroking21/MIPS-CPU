@@ -5,8 +5,6 @@ sll $s1, $s0, 22
 
 div $s1, $t0
 
-mfhi $v0
+mflo $v0
 
-
-# after sll $s1 = -3707764736
-# assert($v0 == 0x000)
+# assert($v0 == ??idk)

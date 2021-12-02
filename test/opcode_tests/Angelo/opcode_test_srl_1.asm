@@ -1,4 +1,4 @@
 lui $s1 0x10
-srl $s1 $s2 0x1
+srl $s1 $v0 0x1
 
-#assert ($s2 == 0x8)
+#assert ($v0 == 0x8)
