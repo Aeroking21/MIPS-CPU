@@ -4,4 +4,4 @@ jr $zero
 addiu v1 $ra 0x3 
 nop
 
-assert v1 = bfc00007
+assert v1 = bfc00009
