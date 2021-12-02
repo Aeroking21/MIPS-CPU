@@ -1,5 +1,5 @@
 lui $t1.0xffff
-addu $t0.$t1
+addiu $t0.$t1.0x0000
 
 lw $v0.0x22($t1)
 
