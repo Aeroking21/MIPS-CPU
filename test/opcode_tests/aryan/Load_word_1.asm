@@ -1,6 +1,8 @@
+lui $t0.0xf000
 lui $t1.0xffff
-addiu $t0.$t1.0x0000
+sw t1.0($t0)
+lw $t2.0x0($t0)
 
-lw $v0.0x22($t1)
+assert $t2 == 0xf0000000
 
-assert $v0 == 0xffff0022
+
