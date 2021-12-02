@@ -1,11 +1,11 @@
 module alu(
-    input clk,
-    input [31:0] op1,
-    input [31:0] op2,
-    input [3:0] shamt,
-    input [5:0] alu_control, //opcode is always 0 for this module
-    output [0:31] out,
-    output [0:31] out2
+    input logic clk,
+    input logic [31:0] op1,
+    input logic [31:0] op2,
+    input logic [3:0] shamt,
+    input logic [5:0] alu_control, //opcode is always 0 for this module
+    output logic [0:31] out,
+    output logic [0:31] out2
 
 ); 
     logic [31:0] a;
