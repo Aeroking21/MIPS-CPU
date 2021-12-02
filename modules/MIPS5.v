@@ -24,7 +24,7 @@ module MIPS5(
 
     logic[5:0] OP; 
     logic[5:0] funct;
-    logic[31:0] op_1, op_2 jump_address, PC_next; //reg_write;
+    logic[31:0] op_1, op_2, jump_address, PC_next, reg_write, out, HI, LO, HI_m, LO_m;
     logic[5:0] reg_addr1, reg_addr2, reg_addrw, shamt; //reg_addrw;
     logic[15:0] astart; 
     logic next_active; 
@@ -38,8 +38,10 @@ module MIPS5(
     logic [3:0] PC_upper; 
     logic [25:0] target; 
     logic MSB;
+
+    
      
-    reg signed [31:0] HI, LO; 
+    reg signed [31:0] HI_reg, LO_reg; 
 
 //decoder
     typedef enum logic[5:0] {
@@ -62,26 +64,30 @@ module MIPS5(
         BNE = 6'b000101
     } t_OP; 
 
-    typedef enum logic[4:0]{
-        JR = 5'b001000,
-        ADDU = 5'b100001,
-        AND = 5'b100100,
-        SLT = 5'b101010,
-        SLTU = 5'b101011,
-        SUBU = 5'b100011,
-        XOR = 5'b100110,
-        SLL = 5'b0,
-        SLLV = 5'b000100,
-        SRA = 5'b000011,
-        SRAV = 5'b000111,
-        SRL = 5'b000010,
-        SRLV = 5'b000110,
-        DIV = 5'b011010,
-        DIVU = 5'b011011,
-        OR = 5'b100101,
-        MULT = 5'b011000,
-        MULTU = 5'b011001,
-        JALR = 5'b001001
+    typedef enum logic[5:0]{
+        JR = 6'b001000,
+        ADDU = 6'b100001,
+        AND = 6'b100100,
+        SLT = 6'b101010,
+        SLTU = 6'b101011,
+        SUBU = 6'b100011,
+        XOR = 6'b100110,
+        SLL = 6'b0,
+        SLLV = 6'b000100,
+        SRA = 6'b000011,
+        SRAV = 6'b000111,
+        SRL = 6'b000010,
+        SRLV = 6'b000110,
+        DIV = 6'b011010,
+        DIVU = 6'b011011,
+        OR = 6'b100101,
+        MULT = 6'b011000,
+        MULTU = 6'b011001,
+        JALR = 6'b001001,
+        MTHI = 6'b010001,
+        MTLO = 6'b010011,
+        MFHI = 6'b010000,
+        MFLO = 6'b010010
     } t_funct; 
 
     typedef enum logic[2:0]{
@@ -110,8 +116,8 @@ module MIPS5(
     assign target = instr[25:0]; 
 
     assign R_type = (OP == R) ? 1:0;
-    assign J_type = (OP == JAL OR OP == J) ? 1:0; 
-    assign I_type = (!J_type AND !R_type) ? 1:0; 
+    assign J_type = (OP == JAL || OP == J) ? 1:0; 
+    assign I_type = (!J_type && !R_type) ? 1:0; 
 
     assign astart = instr[15:0]; 
 
@@ -135,7 +141,7 @@ module MIPS5(
         end 
 
         else begin
-            ALU_code = {0'b, OP_tail}; 
+            ALU_code = {1'b0, OP_tail}; 
         end 
     end 
             
@@ -145,12 +151,12 @@ module MIPS5(
 
     assign reg_addr1 = instr[25:21]; 
     assign reg_addr2 = instr[20:16]; 
-    assign reg_addrw = (OP == R) ? instr[15:11] : ((OP==B0 AND (reg_addr2 == BGEZAL OR reg_addr2 == BLTZAL)) OR OP == JAL) ? 5'd31 : instr[20:16]; //which part of the instruction word determines the address to write depends on the type of instruction
+    assign reg_addrw = (OP == R) ? instr[15:11] : ((OP==B0 && (reg_addr2 == BGEZAL || reg_addr2 == BLTZAL)) || OP == JAL) ? 5'd31 : instr[20:16]; //which part of the instruction word determines the address to write depends on the type of instruction
 
     assign write_enable = 
     ((OP == R 
         && funct != JR 
-        && fucnt != DIV && funct != DIVU 
+        && funct != DIV && funct != DIVU 
         && funct != MFHI && funct != MFLO 
         && funct != MTHI && funct != MTLO 
         && funct != MULT && funct != MULTU)
@@ -162,7 +168,7 @@ module MIPS5(
 
 // register file reading 
     assign op_1 = reg_file[reg_addr1]; 
-    assign op_2 = (OP==R)) ? reg_file[reg_addr2] : {16'b0, astart}; 
+    assign op_2 = (OP==R) ? reg_file[reg_addr2] : {16'b0, astart}; 
     assign shamt = instr[10:7];
 
     assign MSB = op_1[31];
@@ -194,28 +200,56 @@ end
         active <= next_active; 
     end // this means that probably some of the asserts will be wrong 
 
+/**/
 
-// PROVVISORIO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//what each op does this will need to be changed since the ALU will be in a separate module 
-    always_comb begin 
-        if (reset) begin 
-            reg_write = 0;
+//instantiate the ALU
+
+//ops 
+    always_comb begin
+        case(OP)
+        LW: reg_write = data_in; 
+        SW: data_out = op_1;
+        JAL: reg_write = PC+4; 
+        B0: begin 
+            if (reg_addr2 == BGEZAL || reg_addr2 == BLTZAL) begin 
+                reg_write = PC +4;
+            end 
         end 
-
-        else begin 
-            case(OP)
-            R: case (funct)
-                 ADDU: reg_write = reg_read1 + reg_read2; // depending on how we are going to separate the ALU this can be written as: 
-                 // reg_file[reg_addrw] = reg_file[reg_addr1] + reg_file[reg_addr2]
-                 JR: ; // JR do nothing here, IDK if it's needed or if it's going to stall it 
-                endcase
-            LW: reg_write = data_in;
-            SW: data_out = op_1; 
-            ADDIU: reg_write = reg_read1 + {16'b0, astart};
-            endcase
-        end     
+        R: begin
+            if (funct == JALR) begin 
+                reg_write = PC + 4; 
+            end 
+            else if (funct == JR) begin 
+            end 
+            else if (funct == MFHI) begin 
+                reg_write = HI_reg;
+            end 
+            else if (funct == MFLO) begin 
+                reg_write = LO_reg; 
+            end
+            else begin 
+                reg_write = out; //this will set it to out even when it's doing Multiplication or division but it should be fine because the write enable shouldn't be one (even though it0s not very elegant, see what to do about this)
+            end 
+        end 
+        default: reg_write = out; //this heavily relies on the write enable being correct, should really address this in testing 
+        endcase 
     end 
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+//HI/LO
+always_ff @(posedge clk) begin 
+    if(OP == R && (funct == MULT || funct == MULTU || funct == DIV || funct == DIVU)) begin // to this I will need to add the other hi and lo instructions (MFLO; MTLO and so on)
+        HI_reg <= HI; 
+        LO_reg <= LO; 
+    end 
+    else if (OP == R && funct == MTLO) begin 
+        LO_reg <= op_1;
+    end 
+    else if (OP == R && funct == MTHI) begin 
+        HI_reg <= op_1;
+    end 
+end
+
+
 
 
 //save the register address as it will change as soon as the next instruction is brought up 
@@ -237,21 +271,17 @@ end
             JR: PC_next = PC + op_1;
             JALR: begin 
                 PC_next = PC + op_1; 
-                reg_write = PC + 4;
             end 
             default: PC_next = PC+4; 
             endcase
         end 
 //J_type
         else if (J_type) begin 
-            case(OP)
-            J: PC_next = {PC_upper, target 2'b00}; 
-            JAL: begin 
-               PC_next = {PC_upper, target 2'b00}; 
-               reg_write = PC + 4;
-            end 
-            default: PC_next = PC +4; 
-            endcase
+            //case(OP)
+            PC_next = {PC_upper, target, 2'b00}; 
+            //JAL: PC_next = {PC_upper, target, 2'b00};          
+            //default: PC_next = PC +4; 
+           // endcase
         end 
 //I_type 
         else if (I_type) begin 
@@ -260,17 +290,15 @@ end
                 //4 branches with equal opcode, they can be differentiated by looking at the bits in the places corresponding to reg_addr2 (rs)
                 if (OP == B0) begin 
                     if(((reg_addr2 == BGEZ || reg_addr2 == BGEZAL) && !MSB) || ((reg_addr2 == BLTZ || reg_addr2 == BLTZAL) && MSB)) begin  //associate functions and conditions 
-                        PC_next = PC + (astart * 4); 
-                        if (reg_addr2 == BGEZAL || reg_addr2 == BLTZAL) begin
-                            reg_write = PC +4;
-                        end 
+                        PC_next = PC + (astart * 4);
+                        //I moved the saving of the register to the ops file 
                     end 
                     else begin 
                         PC_next = PC +4; 
                     end 
                 end 
                 // all other I_type branches 
-                else if ( (OP == BEQ && op_1 == op2) || (OP == BGTZ && op_1 > 0) || (OP == BLEZ && op_1 <= 0) || (OP == BNE && op_1 != op_2)) begin 
+                else if ( (OP == BEQ && op_1 == op_2) || (OP == BGTZ && op_1 > 0) || (OP == BLEZ && op_1 <= 0) || (OP == BNE && op_1 != op_2)) begin 
                     PC_next = PC + (astart * 4); 
                 end
             end
@@ -279,6 +307,7 @@ end
         end 
     end 
     
+//ALU 
 
 
 
@@ -302,7 +331,7 @@ end
 
 //active control 
     always_comb begin
-        next_active = reset ? 1: (instr_address == 0) ? 0: active;  // even though active should be high during reset we need to make sure that it only activates if reset is high for more than a cycle, see how to do that 
+        next_active = reset ? 1: (PC == 0) ? 0: active;  // even though active should be high during reset we need to make sure that it only activates if reset is high for more than a cycle, see how to do that 
     end 
 
 
@@ -339,5 +368,7 @@ end
         // for the above example try reg_file[reg_addrw] = reg_file
         
     end 
-    
+    alu ALU(
+        .op1(op_1), .op2(op_2), .shamt(shamt), .alu_control(ALU_code), .low(LO), .high(HI), .out(out)
+    );
 endmodule
