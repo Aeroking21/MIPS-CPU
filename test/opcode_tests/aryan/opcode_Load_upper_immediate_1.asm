@@ -1,6 +1,3 @@
-lui $v1 0xFFFF
-addiu $v0 $v1 0x00FF
-jr $zero
-nop
+lui $vo.0x0000ffff
 
-# assert v0 = 0xFFFF00FF
+assert v0 == 0xffff0000
