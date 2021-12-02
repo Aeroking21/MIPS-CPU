@@ -27,6 +27,8 @@ module CPU_tb(
     end
  
     initial begin
+    $dumpfile("CPU_TB.vcd");
+    $dumpvars(0, CPU_tb);
         #1
         clock_enable = 1;
         reset = 1;
