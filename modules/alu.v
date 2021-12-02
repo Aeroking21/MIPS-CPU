@@ -1,5 +1,4 @@
 module alu(
-    input logic clk,
     input logic [31:0] op1,
     input logic [31:0] op2,
     input logic [3:0] shamt,
