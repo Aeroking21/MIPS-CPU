@@ -1,5 +1,5 @@
-li $s0 0x2A
-li $s1 0x2b
-OR $v0.$s0.$s1
+addiu $s1,$zero,0x2A
+addiu $s2,$zero,0x2B
+OR $v0.$s1.$s2
 
 assert $v0==0x2b
