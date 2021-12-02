@@ -1,7 +1,7 @@
 addiu $s0, $0, 0x0246
 addiu $t0, $0, 0x0002
 
-not $s1, $s0
+sll $s1, $s0, 22
 
 div $s1, $t0
 
