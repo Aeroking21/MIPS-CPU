@@ -1,4 +1,4 @@
-li $s0 0x2A
+addiu $s0,$zero,0x2A
 ORi $v0.$s0.0x2b
 
 assert $v0==0x2b
