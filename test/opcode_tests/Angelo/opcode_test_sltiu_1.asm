@@ -1,4 +1,3 @@
 lui $s1 0x001f
-sltiu $s1 $s2 0x001e
-
-#assert ($s2 == 0x0)
+sltiu $s1 $v0 0x001e
+#assert ($v0 == 0x0)
