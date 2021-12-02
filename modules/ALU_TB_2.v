@@ -6,7 +6,7 @@ logic[31:0] instruction;
 logic[5:0] opcode, func_code;
 logic[15:0] immediate;
 
-//Note the Machine code is partially junk code.
+//Note the Machine code is placeholder.
 //Only the opcode and func_code portions matter.
 
 initial begin
@@ -15,6 +15,7 @@ initial begin
     #1;
     //Test 1
 
+    ALUsrc = 0;
     alu_a = 32'h80000000;
     alu_b = 32'h00000001;
     instruction = 32'b00000000010000110000100000100001;
@@ -26,6 +27,8 @@ initial begin
 
     //Test 2
 
+
+    ALUsrc = 0;
     alu_a = 32'hfffffffe;
     alu_b = 32'h00000001;
     instruction = 32'b00000000010000110000100000100001;
@@ -37,6 +40,7 @@ initial begin
 
     //Test 3
 
+    ALUsrc = 0;
     alu_a = 32'h00010001;
     alu_b = 32'h11101110;
     instruction = 32'b00000000010000110000100000100001;
@@ -50,6 +54,7 @@ initial begin
 
     //Test 1
 
+    ALUsrc = 0;
     alu_a = 32'h80000000;
     alu_b = 32'h00000001;
     instruction = 32'b00000000010000110000100000100100;
@@ -61,6 +66,7 @@ initial begin
 
     //Test 2
 
+    ALUsrc = 0;
     alu_a = 32'hffffffff;
     alu_b = 32'h1f000001;
     instruction = 32'b00000000010000110000100000100100;
@@ -72,6 +78,7 @@ initial begin
 
     //Test 3
 
+    ALUsrc = 0;
     alu_a = 32'hffffffff;
     alu_b = 32'hffffffff;
     instruction = 32'b00000000010000110000100000100100;
@@ -85,6 +92,7 @@ initial begin
 
     //Test 1
 
+    ALUsrc = 1;
     alu_a = 32'hffffffff;
     instruction = 32'b00110000010000011111111111111111; 
     immediate = instruction[15:0]; //Immediate = 0xffff
@@ -95,6 +103,7 @@ initial begin
 
     //Test 2
 
+    ALUsrc = 1;
     alu_a = 32'hffffffff;
     instruction = 32'b00110000010000000000000000000000; 
     immediate = instruction[15:0]; //Immediate = 0x0000
@@ -105,6 +114,7 @@ initial begin
 
     //Test 3
 
+    ALUsrc = 1;
     alu_a = 32'hffffffff;
     instruction = 32'b00110000010000010101010101010101; 
     immediate = instruction[15:0]; //Immediate = 0xffff
@@ -117,6 +127,7 @@ initial begin
 
     //Test 1
 
+    ALUsrc = 0;
     alu_a = 32'h00000004;
     alu_b = 32'h00000001;
     instruction = 00000000001000100000000000011010;
@@ -127,6 +138,7 @@ initial begin
     #1;
     //Test2
 
+    ALUsrc = 0;
     alu_a = 32'h00000100;
     alu_b = 32'h00000100;
     instruction = 00000000001000100000000000011010;
@@ -137,6 +149,7 @@ initial begin
     #1;
     //Test 3
 
+    ALUsrc = 0;
     alu_a = 32'hFFFFFFCE; //signed, this is -50 in 2s complement form
     alu_b = 32'h00000005; //5
     instruction = 00000000001000100000000000011010;
@@ -149,6 +162,7 @@ initial begin
 
     //Test 1
 
+    ALUsrc = 0;
     alu_a = 32'h00010001;
     alu_b = 32'h00010001;
     instruction = 00000000001000100000000000011011;
@@ -160,6 +174,7 @@ initial begin
 
     //Test 2
 
+    ALUsrc = 0;
     alu_a = 32'hffffffff;
     alu_b = 32'h00000001;
     instruction = 00000000001000100000000000011011;
@@ -171,6 +186,7 @@ initial begin
 
     //Test 3
 
+    ALUsrc = 0;
     alu_a = 32'h000001F4; //500
     alu_b = 32'h00000005; //5
     instruction = 00000000001000100000000000011011;
