@@ -1,5 +1,5 @@
-li $s1.0x2A
-lI $s2.0x2B
+lui $s1.0x2A
+luI $s2.0x2B
 multu $s1 $s2
 mfhi $ v0
 
