@@ -1,4 +1,3 @@
-lbu $v1.0x8($v0)
 
 lui $t0.0xf000
 lui $t1.0x0ff0
