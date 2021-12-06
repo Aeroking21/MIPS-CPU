@@ -19,7 +19,7 @@ The instructions to be tested are:
 
 Code    |   Meaning                                   
 --------|---------------------------------------------
-**Shaanuka**| **Shaanuka**
+**Shaanuka**| 
 ADDIU   |  Add immediate unsigned (no overflow)      
 ADDU    |  Add unsigned (no overflow)                 
 AND     |  Bitwise and                               
