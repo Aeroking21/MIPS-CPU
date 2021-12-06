@@ -19,7 +19,6 @@ The instructions to be tested are:
 
 Code    |   Meaning                                   
 --------|---------------------------------------------
-### Indraneel
 ADDIU   |  Add immediate unsigned (no overflow)      
 ADDU    |  Add unsigned (no overflow)                 
 AND     |  Bitwise and                               
@@ -36,7 +35,6 @@ DIV     |  Divide
 DIVU    |  Divide unsigned                            
 J       |  Jump                                       
 JALR    |  Jump and link register  
-### Aryan
 JAL     |  Jump and link                              
 JR      |  Jump register                              
 LB      |  Load byte                                  
@@ -53,7 +51,6 @@ MULT    |  Multiply
 MULTU   |  Multiply unsigned                          
 OR      |  Bitwise or                                 
 ORI     |  Bitwise or immediate   
-### Angelo
 SB      |  Store byte                                 
 SH      |  Store half-word                            
 SLL     |  Shift left logical                         
