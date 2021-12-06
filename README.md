@@ -9,6 +9,7 @@ Some inspiration:
 5. https://github.com/aryanghbd/MIPS-CPU
 
 
+**TODO** Indraneel still has to do Jump, BGTZAL, BLTZAL
 Instruction Set
 ===============
 
@@ -28,7 +29,7 @@ BEQ     |  Branch on equal
 BGEZ    |  Branch on greater than or equal to zero   
 BGEZAL  |  Branch on non-negative (>=0) and link  
 BGTZ    |  Branch on greater than zero     
-**Angelo**| **Angelo**
+**Angelo**| 
 BLEZ    |  Branch on less than or equal to zero   
 BLTZ    |  Branch on less than zero               
 BLTZAL  |  Branch on less than zero and link          
@@ -37,7 +38,7 @@ DIV     |  Divide
 DIVU    |  Divide unsigned                            
 J       |  Jump                                       
 JALR    |  Jump and link register  
-**Joachim**| **Joachim**
+**Joachim**| 
 JAL     |  Jump and link                              
 JR      |  Jump register                              
 LB      |  Load byte                                  
@@ -46,7 +47,7 @@ LH      |  Load half-word
 LHU     |  Load half-word unsigned                    
 LUI     |  Load upper immediate                       
 LW      |  Load word   
-**Indraneel**| **Indraneel**
+**Indraneel**| 
 LWL     |  Load word left                             
 LWR     |  Load word right                            
 MTHI    |  Move to HI                                 
@@ -55,7 +56,7 @@ MULT    |  Multiply
 MULTU   |  Multiply unsigned                          
 OR      |  Bitwise or                                 
 ORI     |  Bitwise or immediate   
-**Lucia**| **Lucia**
+**Lucia**| 
 SB      |  Store byte                                 
 SH      |  Store half-word                            
 SLL     |  Shift left logical                         
@@ -64,7 +65,7 @@ SLT     |  Set on less than (signed)
 SLTI    |  Set on less than immediate (signed)        
 SLTIU   |  Set on less than immediate unsigned        
 SLTU    |  Set on less than unsigned  
-**Aryan**| **Aryan**
+**Aryan**|
 SRA     |  Shift right arithmetic                     
 SRAV    |  Shift right arithmetic                     
 SRL     |  Shift right logical                        
