@@ -10,8 +10,30 @@ Some inspiration:
 
 ## How to compile 
 1. Go to the OFFICIAL directory
-2. Compile the assembler with   
-  gcc assemble.cpp -lstdc++ -o assemble.out
+2. Compile the assembler with "gcc assemble.cpp -lstdc++ -o assemble.out" (If it says permission denied run "chmod u+x as assemble.cpp")
+3. Change the content of the "test.asm" file to the assembly code you want to test (Check below for format/syntax)
+4. Assemble the instructions with "./assemble.out test.asm > instructions.mem"
+5. Compile all the verilog files with "iverilog -Wall -g 2012 -s CPU_tb -o cpu_tb test/CPU_tb.v test/ROM.v rtl/mips_cpu_harvard.v rtl/alu.v"
+6. Run the output file with "./cpu_tb"
+7. Check waveforms with "gtkwave CPU_TB.vcd"
+8. Log every bug you find (missbehaving instruction, solution, etc.. so we can discuss together later)
+
+## Assembly instruction format
+Every testcase needs to meet the following requirements (assembler wont work otherwise)
+- no commas
+- Register 0 is called $0
+- registers dont need "$" when their register named is used but it is needed when you use the number, for example v0 and $3
+
+For now all test cases also need to meet the following requirements (because of how the CPU and test bench are structured for now)
+- substitute all "lui" instructions with an "addiu" instruction. all you need to do is 
+    1. change the instruction name and 
+    2. add $0 between the first register and the immediate
+- add a jr $0 instruction at the end
+- make sure the final value of the test bench (the one whose value we want to assert) is in v0. If it isn´t add a "addu v0 reg_in_which_the_value_is $0" before the final jr instruction 
+
+If assembly still does not work check https://github.com/JosiahMendes/MIPS32-T501/tree/master/test/testcases/addiu test cases for the instructions that you are trying to test, make sure you match their syntax and update this section with the rules you have found out. 
+
+
 
 **TODO** Indraneel still has to do Jump, BGTZAL, BLTZAL
 Instruction Set
