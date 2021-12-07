@@ -8,6 +8,10 @@ Some inspiration:
 4. https://github.com/xw2519/ISA-MIPS-coursework
 5. https://github.com/aryanghbd/MIPS-CPU
 
+## How to compile 
+1. Go to the OFFICIAL directory
+2. Compile the assembler with   
+  gcc assemble.cpp -lstdc++ -o assemble.out
 
 **TODO** Indraneel still has to do Jump, BGTZAL, BLTZAL
 Instruction Set
