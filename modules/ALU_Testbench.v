@@ -1,96 +1,48 @@
-module e3_testbench();
-    logic [31:0] instruction;
-    logic i_type_ALUSrc;
+module alu_testbench(
 
-    logic [5:0] Opcode; 
-    logic [15:0] immediate;
-
-    #i added immediate and opcode inacse i needed it.
-
-    logic [31:0]alu_a;
-    logic [31:0]alu_b;
-    logic [31:0]alu_out;
-    
-
+);
+    logic[31:0] out;
+    logic[31:0] high;
+    logic[31:0] low;
+    logic[31:0] op1;
+    logic[31:0] op2;
+    logic [3:0] shamt;
+    logic[31:0] instruction;
+    logic[5:0] alu_control;
+    //logic[15:0] immediate;
 
     initial begin
-        $dumpfile("e3_testbench.vcd");
-        $dumpvars(0, e3_testbench);
+    //ADDU
+    //Test 1
+    op1 = 32'h00000001;
+    op2 = 32'h00000001;
+    instruction = 32'b00000000010000110000100000100001;
+    alu_control = 4'b0001;
+    #1
+    $display(out);  
+    assert(out==$unsigned(op1) + $unsigned(op2));
+    $display(out);
+    #1;
+    //Test 2
+    op1 = 32'h00000011;
+    op2 = 32'h00000011;
+    instruction = 32'b00000000010000110000100000100001;
+    alu_control = 4'b1101;
+    #1
+    $display(out);
 
-
-
-        instruction=32'b00000010110101100000000000011000;
-        assign Opcode = instruction [31:26];
-        assign immediate = instruction  [15:0];
-        assign alu_a = 32'b11111111111111111111111111111011;
-        assign alu_b = 32'b00000000000000000000000000000010;
-        #1; 
-        assert(i_type_ALUSrc == 0);
-        assert(alu_out == alu_a * alu_b);
-        
-        
-        instruction=32'b00000010110101100000000000011001;
-        assign Opcode = instruction [31:26];
-        assign immediate = instruction  [15:0];
-        assign alu_a = 32'b00000000000000000000000000000101;
-        assign alu_b = 32'b00000000000000000000000000000010;
-        #1;
-        assert(i_type_ALUSrc == 0);
-        assert(alu_out == alu_a *alu_b);
-
-
-        instruction=32'b00000010110101101001100000100101;
-        assign Opcode = instruction [31:26];
-        assign immediate = instruction  [15:0];
-        assign alu_a = 32'b00000000000000000000000000000101;
-        assign alu_b = 32'b00000000000000000000000000000010;
-        #1;
-        assert(i_type_ALUSrc == 0);
-        assert(alu_out == alu_a | alu_b);
-        
-       
-        instruction=32'b00110110110101100000000000000000;
-        assign Opcode = instruction [31:26];
-        assign immediate = instruction  [15:0];
-        assign alu_a = 32'b00000000000000000000000000000101;
-        #1;
-        assert(i_type_ALUSrc == 1);
-        assert(alu_out == alu_a | immediate);
-
-
-        instruction=32'b00000010110101101001100000100011;
-        assign Opcode = instruction [31:26];
-        assign immediate = instruction  [15:0];
-        assign alu_a = 32'b00000000000000000000000000000101;
-        assign alu_b = 32'b00000000000000000000000000000010;
-        #1;
-        assert(i_type_ALUSrc == 0);
-        assert(alu_out == alu_a - alu_b);
-
-
-        instruction=32'b00000010110101100000000000011000;
-        assign Opcode = instruction [31:26];
-        assign immediate = instruction  [15:0];
-        assign alu_a = 32'b00000000000000000000000000000101;
-        assign alu_b = 32'b00000000000000000000000000000010;
-        #1;
-        assert(i_type_ALUSrc == 0);
-        assert(alu_out == alu_a ^ alu_b);
-
-        instruction=32'b00111010110101100000000000000000;
-        assign Opcode = instruction [31:26];
-        assign immediate = instruction  [15:0];
-        assign alu_a = 32'b00000000000000000000000000000101;
-        #1;
-        assert(i_type_ALUSrc == 0);
-        assert(alu_out == alu_a ^ immediate);
-
+    assert(out == (op1 + op2));
+    
+    #1;
     end
 
-    ALU dd(
-        .opcode(opcode),
-        .itype(itype),  
-        .rtype(rtype),
-        .jtype(jtype)
+    alu dd(
+    .op1(op1),
+    .op2(op2),  
+    .out(out),
+    .high(high),
+    .shamt(shamt),
+    .low(low),
+    .alu_control(alu_control)
     );
 endmodule
