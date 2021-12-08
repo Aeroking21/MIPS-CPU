@@ -33,6 +33,25 @@ For now all test cases also need to meet the following requirements (because of 
 
 If assembly still does not work check https://github.com/JosiahMendes/MIPS32-T501/tree/master/test/testcases/addiu test cases for the instructions that you are trying to test, make sure you match their syntax and update this section with the rules you have found out. 
 
+## to help with debugging 
+- ALU_code is what tells the ALU what instructions to perform. The codes are: 
+          - 0: multiplication 
+          - 1: addition 
+          - 2: set on less than 
+          - 3: set on less than unsigned
+          - 4: and
+          - 5: or 
+          - 6: xor
+          - 7: lui 
+          - 8: shift left logic 
+          - 9: multiplication unsigned
+          - 10: shift right logical 
+          - 11: shift right arithmetic
+          - 12: divide unsigned 
+          - 13: divide 
+          - 14: shift right logic variable
+          - 15: shift right arithmetic variable 
+
 
 
 **TODO** Indraneel still has to do Jump, BGTZAL, BLTZAL
