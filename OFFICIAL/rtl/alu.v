@@ -1,8 +1,8 @@
 module alu(
     input logic [31:0] op1,
     input logic [31:0] op2,
-    input logic [3:0] shamt,
-    input logic [5:0] alu_control, //opcode is always 0 for this module
+    input logic [4:0] shamt,
+    input logic [3:0] alu_control, //opcode is always 0 for this module
     output logic [0:31] low,
     output logic [0:31] high,
     output logic [0:31] out
