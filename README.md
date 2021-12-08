@@ -54,7 +54,25 @@ If assembly still does not work check https://github.com/JosiahMendes/MIPS32-T50
           - 13: divide <br/>
           - 14: shift right logic variable <br/>
           - 15: shift right arithmetic variable <br/>
-
+ - wire names and meaning: 
+     - op_1 and op_2 are the operands (content of registers rs and rt) <br/>
+     - HI/LO are the registers involved in multiplication and division <br/>
+     - OP is the opcode <br/>
+     - PC_next is the next instruction address<br/>
+     - astart is the immediate constatn (directly from instruction word) <br/>
+     - data_read and data_write are the read/ write enables for RAM (load and store instructions) <br/>
+     - data_writedata is the data going to RAM (store) <br/>
+     - data_readdata is the data coming from RAM (load) <br/>
+     - funct is the function code for R type isntructions <br/>
+     - instr is the instruction word (don't mind instr_readdata, it's the litte endian version) <br/>
+     - instr_address is current PC <br/>
+     - out is the ALU output <br/>
+     - reg_addr1 and reg_addr2 are the addresses of the two operands in the register file <br/>
+     - reg_addrw is the address of the register that is going to be written on <br/>
+     - reg_write is what is going to be written in the register <br/>
+     - shamt is the shift amount <br/>
+     - target is the destination address for j type instructions <br/>
+     
 
 
 **TODO** Indraneel still has to do Jump, BGTZAL, BLTZAL
