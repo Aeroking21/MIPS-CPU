@@ -115,7 +115,7 @@ module mips_cpu_harvard(
     assign shift = (funct[5:3] == 3'b0) ? 1 : 0; 
     assign funct_tail = funct[2:0]; 
     assign OP_tail = OP[2:0]; 
-    assign subtype = instr[15:13];
+    assign subtype = instr[31:29];
     assign PC_upper = instr_address[31:28];
     assign target = instr[25:0]; 
     
