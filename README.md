@@ -35,25 +35,25 @@ If assembly still does not work check https://github.com/JosiahMendes/MIPS32-T50
 
 ## to help with debugging 
 - ALU_code is what tells the ALU what instructions to perform. The codes are: 
-          - 0: multiplication 
-          - 1: addition
-          - 2: set on less than 
-          - 3: set on less than unsigned
-          - 4: and 
-          - 5: or 
-          - 6: xor 
-          - 7: lui 
-          - 8: shift left logic
-          - 9: mult unsigned 
-          - 10: shift right 
-          - 8: shift left logic 
-          - 9: multiplication unsigned
-          - 10: shift right logical 
-          - 11: shift right arithmetic
-          - 12: divide unsigned 
-          - 13: divide 
-          - 14: shift right logic variable
-          - 15: shift right arithmetic variable 
+          - 0: multiplication <br/>
+          - 1: addition <br/>
+          - 2: set on less than <br/>
+          - 3: set on less than unsigned <br/>
+          - 4: and <br/>
+          - 5: or <br/>
+          - 6: xor <br/>
+          - 7: lui <br/>
+          - 8: shift left logic <br/>
+          - 9: mult unsigned <br/>
+          - 10: shift right <br/>
+          - 8: shift left logic <br/>
+          - 9: multiplication unsigned <br/>
+          - 10: shift right logical <br/>
+          - 11: shift right arithmetic <br/>
+          - 12: divide unsigned <br/>
+          - 13: divide <br/>
+          - 14: shift right logic variable <br/>
+          - 15: shift right arithmetic variable <br/>
 
 
 
