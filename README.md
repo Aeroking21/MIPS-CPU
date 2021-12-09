@@ -84,10 +84,18 @@ the MIPS ISA Specification (Revision 3.2).
 
 The instructions to be tested are:
 
-Code    |   Meaning                                   
+| Task           | Meaning  | Finished | 
+|----------------|----------------|-----------|
+| Calendar Cache |xyz  |   - [x] ok?
+| Object Cache   |ssds |  [x] item1<br/>[ ] item2
+| Object Cache   | dfd |   <ul><li>- [x] item1</li><li>- [ ] item2</li></ul>
+| Object Cache   | fdfd| <ul><li>[x] item1</li><li>[ ] item2</li></ul>
+
+
+Code    |   Meaning        | Check                           
 --------|---------------------------------------------
-**Shaanuka**| 
-ADDIU   |  Add immediate unsigned (no overflow)      
+**Shaanuka**| |
+ADDIU   |  Add immediate unsigned (no overflow) | - [x]     
 ADDU    |  Add unsigned (no overflow)                 
 AND     |  Bitwise and                               
 ANDI    |  Bitwise and immediate                     
