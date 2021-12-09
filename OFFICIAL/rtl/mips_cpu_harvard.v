@@ -162,7 +162,6 @@ module mips_cpu_harvard(
     ((OP == R 
         && funct != JR 
         && funct != DIV && funct != DIVU 
-        && funct != MFHI && funct != MFLO 
         && funct != MTHI && funct != MTLO 
         && funct != MULT && funct != MULTU)
     || subtype == Imm
