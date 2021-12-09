@@ -84,14 +84,6 @@ the MIPS ISA Specification (Revision 3.2).
 
 The instructions to be tested are:
 
-| Task           | Meaning  | Finished | 
-|----------------|----------------|-----------|
-| Calendar Cache |xyz  |   - [x] ok?
-| Object Cache   |ssds |  [x] item1<br/>[ ] item2
-| Object Cache   | dfd |   <ul><li>- [x] item1</li><li>- [ ] item2</li></ul>
-| Object Cache   | fdfd| <ul><li>[x] item1</li><li>[ ] item2</li></ul>
-
-
 Code    |   Meaning        | Check                           
 --------|---------------------------------------------
 **Shaanuka**| |
