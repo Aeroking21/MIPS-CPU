@@ -383,6 +383,6 @@ end
         
     end 
     alu ALU(
-        .op1(op_1), .op2(op_2), .shamt(shamt), .alu_control(ALU_code), .low(LO), .high(HI), .out(out)
+        .op1(op_1), .op2(op_2), .alu_control(ALU_code), .low(LO), .high(HI), .out(out)
     );
 endmodule
