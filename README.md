@@ -82,7 +82,7 @@ Instruction Set
 The target instruction-set is 32-bit big-endian MIPS1, as defined by
 the MIPS ISA Specification (Revision 3.2).
 
-The instructions to be tested are:
+The instructions to be tested are :
 
 Code    |   Meaning        | Check                           
 --------|---------------------------------------------
