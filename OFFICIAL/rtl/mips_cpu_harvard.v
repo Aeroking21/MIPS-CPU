@@ -146,7 +146,7 @@ module mips_cpu_harvard(
                 AND: ALU_code = 4'b0100;
                 OR: ALU_code = 4'b0101;
                 XOR: ALU_code = 4'b0110;
-                SUBU: ALU_code = 4'b0111; 
+                SUBU: ALU_code = 4'b1110; 
                 MULTU: ALU_code = 4'b1001;
                 DIVU: ALU_code = 4'b1100;
                 DIV: ALU_code = 4'b1101; 
