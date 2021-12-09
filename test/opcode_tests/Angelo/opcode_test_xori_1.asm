@@ -1,4 +1,4 @@
-lui $s1 0xffff
-xori $s1 $v0 0xffff0000
+addiu s1 s1 0xffff
+xori s1 v0 0xffff0000
 
-#assert ($v0 == 0xffffffff)
+#assert (v0 == 0xffffffff)
