@@ -132,23 +132,30 @@ module mips_cpu_harvard(
 
         if (OP==R) begin 
             if (shift) begin 
-                ALU_code = {1'b1, funct_tail}; 
-            end 
-            else if (funct == MULTU) begin 
-                ALU_code = 4'b1001;
-            end 
-            else if (funct == DIV) begin 
-                ALU_code = 4'b1101; 
-            end 
-            else if (funct == DIVU) begin 
-                ALU_code = 4'b1100; 
-            end 
+                ALU_code = {2'b10, funct_tail}; 
+            end
+            else begin 
+                case (funct)
+                MULT: ALU_code = 4'b0000;
+                ADDU: ALU_code = 4'b0001;
+                SLT: ALU_code = 4'b0010;
+                SLTU: ALU_code = 4'b0011;
+                AND: ALU_code = 4'b0100;
+                OR: ALU_code = 4'b0101;
+                XOR: ALU_code = 4'b0110;
+                SUBU: ALU_code = 4'b0111; 
+                MULTU: ALU_code = 4'b1001;
+                DIVU: ALU_code = 4'b1100;
+                DIV: ALU_code = 4'b1101; 
+                endcase
+            end
+            // here I need something for the R type operations not included in this definition
         end 
-
         else begin
             ALU_code = {1'b0, OP_tail}; 
         end 
     end 
+    
             
         
     reg [31:0] reg_file [31:0]; // need to sign extend partial loads here or elsewhere? 
