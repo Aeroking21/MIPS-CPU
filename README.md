@@ -34,14 +34,14 @@ For now all test cases also need to meet the following requirements (because of 
 If assembly still does not work check https://github.com/JosiahMendes/MIPS32-T501/tree/master/test/testcases/addiu test cases for the instructions that you are trying to test, make sure you match their syntax and update this section with the rules you have found out. 
 
 ## to help with debugging 
-- ALU_code is what tells the ALU what instructions to perform. The codes are: 
-          - 0: multiplication <br/>
-          - 1: addition <br/>
-          - 2: set on less than <br/>
-          - 3: set on less than unsigned <br/>
-          - 4: and <br/>
-          - 5: or <br/>
-          - 6: xor <br/>
+- ALU_code is what tells the ALU what instructions to perform. The codes are: <br/>
+          - 0: multiplication (MULT) <br/> 
+          - 1: addition (ADDU, ADDIU) <br/> 
+          - 2: set on less than (SLT, SLTI) <br/> 
+          - 3: set on less than unsigned (SLTU, SLTIU) <br/> 
+          - 4: and (AND, ANDI) <br/>
+          - 5: or  (OR, ORI) <br/>
+          - 6: xor (XOR, XORI) <br/>
           - 7: lui <br/>
           - 8: shift left logic <br/>
           - 9: mult unsigned <br/>
