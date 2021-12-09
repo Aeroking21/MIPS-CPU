@@ -12,7 +12,7 @@ module alu(
         case(alu_control)
             default: begin end
             4'b0000: begin //MULT
-                divmult_out = op1*op2;
+                divmult_out = $signed(op1)* $signed(op2);
                 out = 0;
             end
             4'b1001: begin //MULTU
@@ -21,8 +21,8 @@ module alu(
             end
 
             4'b1101: begin //DIV
-                divmult_out[31:0] = op1/op2;
-                divmult_out[63:32] = op1%op2; 
+                divmult_out[31:0] = $signed(op1)/$signed(op2);
+                divmult_out[63:32] = $signed(op1) % $signed(op2); 
                 out = 0; end
 
             4'b1100: begin //DIVU
