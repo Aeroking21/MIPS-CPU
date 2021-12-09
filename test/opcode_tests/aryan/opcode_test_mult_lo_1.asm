@@ -1,5 +1,5 @@
-li $s1.0x2A
-lI $s2.0x2B
+addiu $s1 $0 0x2A
+addiu $s2 $0 0x2B
 mult $s1 $s2
 mflo $ v0
 
