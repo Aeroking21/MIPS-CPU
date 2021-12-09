@@ -1,3 +1,3 @@
-lui $s1 0x40
-slti $s1 $v0 0x20
-#assert ($v0 == 0x1)
+addiu s1 s1 0x40
+slti s1 v0 0x20
+#assert (v0 == 0x1)
