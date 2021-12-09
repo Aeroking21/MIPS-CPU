@@ -84,10 +84,10 @@ the MIPS ISA Specification (Revision 3.2).
 
 The instructions to be tested are :
 
-Code    |   Meaning        | Check                           
+Code    |   Meaning                             
 --------|---------------------------------------------
-**Shaanuka**| |
-ADDIU   |  Add immediate unsigned (no overflow) | - [x]     
+**Shaanuka**|
+ADDIU   |  Add immediate unsigned (no overflow)     
 ADDU    |  Add unsigned (no overflow)                 
 AND     |  Bitwise and                               
 ANDI    |  Bitwise and immediate                     
