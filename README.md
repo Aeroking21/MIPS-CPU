@@ -43,17 +43,14 @@ If assembly still does not work check https://github.com/JosiahMendes/MIPS32-T50
           - 5: or  (OR, ORI) <br/>
           - 6: xor (XOR, XORI) <br/>
           - 7: lui <br/>
-          - 8: shift left logic <br/>
-          - 9: mult unsigned <br/>
-          - 10: shift right <br/>
-          - 8: shift left logic <br/>
-          - 9: multiplication unsigned <br/>
-          - 10: shift right logical <br/>
-          - 11: shift right arithmetic <br/>
-          - 12: divide unsigned <br/>
-          - 13: divide <br/>
-          - 14: shift right logic variable <br/>
-          - 15: shift right arithmetic variable <br/>
+          - 8: shift left logical/ shift left logical variable (SLL/SLLV) <br/>
+          - 9: mult unsigned (MULTU) <br/>
+          - 10: shift right logical/ shift right logical variable (SRL/SRLV) <br/>
+          - 11: shift right arithmetic/ shift right arithmetic variable (SRA/SRAV) <br/>
+          - 12: divide unsigned (DIVU) <br/>
+          - 13: divide (DIV)<br/>
+          - 14: subtract unsigned (SUBU) <br/>
+          - 15: nothing <br/>
  - wire names and meaning: 
      - `op_1` and `op_2` are the operands (content of registers rs and rt) <br/>
      - `HI/LO` are the registers involved in multiplication and division <br/>
