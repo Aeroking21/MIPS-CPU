@@ -33,13 +33,15 @@ module mips_cpu_harvard(
     logic write_enable;
     logic shift; 
     logic[3:0] ALU_code;
-    logic[2:0] funct_tail, OP_tail; 
+    logic[2:0]  OP_tail;
+    logic [1:0] funct_tail;
     logic[2:0] subtype;
     logic R_type, I_type, J_type; 
     logic [3:0] PC_upper; 
     logic [25:0] target; 
     logic MSB;
     logic[31:0] instr;
+    logic shift_op2;
 
     
      
@@ -118,6 +120,7 @@ module mips_cpu_harvard(
     assign subtype = instr[31:29];
     assign PC_upper = instr_address[31:28];
     assign target = instr[25:0]; 
+    assign shift_op2 = funct[2];
     
 
     assign R_type = (OP == R) ? 1:0;
@@ -178,9 +181,10 @@ module mips_cpu_harvard(
         && (reg_addr2 == BGEZAL || reg_addr2 == BLTZAL))) ? 1 : 0; // these are all the occasions in which a register from the register file will have to be written 
 
 // register file reading 
-    assign op_1 = reg_file[reg_addr1]; 
-    assign op_2 = (OP==R) ? reg_file[reg_addr2] : {16'b0, astart}; 
     assign shamt = instr[10:6];
+    assign op_1 = reg_file[reg_addr1]; 
+    assign op_2 = (OP==R) ? (shift && !shift_op2) ? {27'b0, shamt} : reg_file[reg_addr2] : {16'b0, astart}; 
+    
 
     assign MSB = op_1[31];
 
