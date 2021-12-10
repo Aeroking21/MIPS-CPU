@@ -318,6 +318,7 @@ end
                 end
                 else begin 
                     PC_next = instr_address +4;
+                end
             end
             default: PC_next = instr_address +4; 
             endcase 
