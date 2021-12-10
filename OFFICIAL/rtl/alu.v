@@ -36,7 +36,7 @@ module alu(
             4'b0100: out = op1&op2;//AND
             4'b0101: out = (op1|op2); //OR
             4'b0110: out = (op1^op2); //XOR
-            4'b0111: out= op1;//Load upper immediate (Lui) (ALU control should handle immediate --> Op1)
+            //4'b0111: out= op1;//Load upper immediate (Lui)
             4'b1000: out = op2 << op1; // SLL(V) Logical Shift left/(same as ASL))
             4'b1010: out = op2 >> op1; //SRL(V) Logical Shift right 
             4'b1011: out = $signed(op2) >>> op1; //arithmetic shift right SRA(V). Variable- shiftamount value pushed onto op1 if this is the case.
