@@ -1,4 +1,4 @@
-addiu s1 $0 0xf123
+addiu s4 $0 0xf123
 mthi s4
 mfhi v0
 jr $0
