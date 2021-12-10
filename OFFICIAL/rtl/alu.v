@@ -31,8 +31,8 @@ module alu(
                 out = 0; end
 
             4'b0001: out = $unsigned(op1) + $unsigned(op2); //ADDU
-            4'b0010: out = op1<op2; //Set on less than - SLT
-            4'b0011: out = $unsigned(op1) < $unsigned(op2); //SLTU
+            4'b0010: out = ($signed(op1)< $signed(op2)); //Set on less than - SLT
+            4'b0011: out = ($unsigned(op1) < $unsigned(op2)); //SLTU
             4'b0100: out = op1&op2;//AND
             4'b0101: out = (op1|op2); //OR
             4'b0110: out = (op1^op2); //XOR
