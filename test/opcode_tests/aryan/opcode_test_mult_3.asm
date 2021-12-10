@@ -3,3 +3,5 @@ addiu t2 $0 0xffff
 mult s1 t2
 mflo v0
 jr $0
+
+# v0 = 0x00000000
