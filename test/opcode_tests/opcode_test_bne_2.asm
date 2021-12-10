@@ -1,9 +1,9 @@
-addiu $s0, $0, 0x0123
-addiu $s1, $0, 0x0123
-bne $s0, $s1, 14
-addu $v0, $0, $0
+addiu s0 $0 0xFFFF
+addiu s1 $0 0xFFFF
+bne s0 s1 0x2
+addiu v1 $0 0x000A
+addiu s3 v1 0x0005
+addiu v0 s3 0x0004
+jr $0
 
-
-0x60 : addu $v0, $0, $s0 
-
-# assert($v0 == 0x0000)
+# assert(v == 9)
