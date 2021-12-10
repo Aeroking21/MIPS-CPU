@@ -4,4 +4,4 @@ multu s1 v0
 mfhi v0
 jr $0
 
-# assert v0 == 0x70E
+# assert v0 == 0x0000000
