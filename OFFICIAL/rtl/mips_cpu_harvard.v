@@ -230,6 +230,7 @@ end
                 reg_write = instr_address +4;
             end 
         end 
+        LUI: reg_write = {astart, 16'b0};
         R: begin
             if (funct == JALR) begin 
                 reg_write = instr_address + 4; 
