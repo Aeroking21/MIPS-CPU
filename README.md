@@ -124,7 +124,7 @@ ORI     |  Bitwise or immediate
 **Lucia**| 
 SB      |  Store byte                                 
 SH      |  Store half-word                            
-SLL     |  Shift left logical   <span style="color:blue">some *blue* text</span>.                      
+SLL     |  Shift left logical                       
 SLLV    |  Shift left logical variable                
 SLT     |  Set on less than (signed)                  
 SLTI    |  Set on less than immediate (signed)        
