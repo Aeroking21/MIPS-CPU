@@ -33,6 +33,8 @@ For now all test cases also need to meet the following requirements (because of 
 
 If assembly still does not work check https://github.com/JosiahMendes/MIPS32-T501/tree/master/test/testcases/addiu test cases for the instructions that you are trying to test, make sure you match their syntax and update this section with the rules you have found out. 
 
+Note: for some reason the syntax of SLL (and potentially other shifts) is inverted: rd doesn't come first (so SLL s1 v0 0x10 will store the result in v0 and use s1 as op2) 
+
 ## to help with debugging 
 - ALU_code is what tells the ALU what instructions to perform. The codes are: <br/>
           - 0: multiplication (MULT) <br/> 
