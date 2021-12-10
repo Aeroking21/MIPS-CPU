@@ -1,4 +1,5 @@
-jal 0x2FF00002
-nop
-
-assert $ra = bfc00004
+jal 0x3f00003
+addiu s1 s1 0x12
+jr $0
+addiu v0 s1 0x5
+jr $31
