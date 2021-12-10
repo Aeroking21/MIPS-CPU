@@ -123,9 +123,7 @@ OR      |  Bitwise or
 ORI     |  Bitwise or immediate   
 **Lucia**| 
 SB      |  Store byte                                 
-SH      |  Store half-word                            
-SLL     |  Shift left logical                       
-SLLV    |  Shift left logical variable                
+SH      |  Store half-word                             
 SLT     |  Set on less than (signed)                  
 SLTI    |  Set on less than immediate (signed)        
 SLTIU   |  Set on less than immediate unsigned        
@@ -138,4 +136,8 @@ SRLV    |  Shift right logical variable
 SUBU    |  Subtract unsigned                          
 SW      |  Store word                                 
 XOR     |  Bitwise exclusive or                       
-XORI    |  Bitwise exclusive or immediate             
+XORI    |  Bitwise exclusive or immediate   
+
+**Done**
+SLL     |  Shift left logical                       
+SLLV    |  Shift left logical variable               
