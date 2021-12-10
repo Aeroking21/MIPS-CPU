@@ -137,7 +137,6 @@ SUBU    |  Subtract unsigned
 SW      |  Store word                                 
 XOR     |  Bitwise exclusive or                       
 XORI    |  Bitwise exclusive or immediate   
-
-**Done**
+**Done**|
 SLL     |  Shift left logical                       
 SLLV    |  Shift left logical variable               
