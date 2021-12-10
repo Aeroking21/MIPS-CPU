@@ -5,4 +5,4 @@ addu v0 s1 s3
 addu v0 v0 v0
 jr $0
 
-#assert (v0 = 9860)
+#assert (v0 == 9860)
