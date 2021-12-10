@@ -46,7 +46,7 @@ module alu(
     endcase
 
     end
-    assign low  = divmult_out[31:0];
+    assign low  = divmult_out[31:0]; //blah
     assign high = divmult_out[63:32];
 
 endmodule
