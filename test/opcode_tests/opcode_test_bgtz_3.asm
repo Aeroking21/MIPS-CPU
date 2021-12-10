@@ -1,8 +1,7 @@
-addiu $s0, $0, 0x0123
-bgtz $s0, 14
-addu $v0, $0, $0
+addiu s0 $0 0xFFFF
+bgtz $0 0x02
+addiu s1 $0 0x0002
+addiu v0 s1 0x0008
+jr $0
 
-
-0x60 : addu $v0, $0, $s0 
-
-# assert($v0 == 0x0123)
+# assert(v==0)
