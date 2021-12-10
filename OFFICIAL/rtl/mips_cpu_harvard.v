@@ -316,6 +316,8 @@ end
                 else if ( ((OP == BEQ) && (op_1 == op_2)) || ((OP == BGTZ) && (op_1 > 0)) || ((OP == BLEZ) && (op_1 <= 0)) || ((OP == BNE) && (op_1 != op_2))) begin 
                     PC_next = instr_address + (astart * 4); 
                 end
+                else begin 
+                    PC_next = instr_address +4;
             end
             default: PC_next = instr_address +4; 
             endcase 
