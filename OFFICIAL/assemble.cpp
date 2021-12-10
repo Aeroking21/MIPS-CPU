@@ -356,7 +356,7 @@ unordered_map<string,int> registers(){
     umap["t7"] = 15;
     umap["s0"] = 16;
     umap["s1"] = 17;
-    umap["s1"] = 18;
+    umap["s2"] = 18;
     umap["s3"] = 19;
     umap["s4"] = 20;
     umap["s5"] = 21;
