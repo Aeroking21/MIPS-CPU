@@ -1,5 +1,4 @@
-addiu s1 s1 0x80 
-addiu s2 s2 0x2
-srav s2 s1 v0
-
-#assert (v0 == 0x20)
+addiu s1 $0 0x0fff
+addiu s2 $0 0x2
+srav v0 s1 s2
+jr $0
