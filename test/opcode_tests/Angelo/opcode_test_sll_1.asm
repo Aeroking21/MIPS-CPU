@@ -1,3 +1,3 @@
-addiu $s1 $s1 0x01
-sll $s1 $v0 0x2
-#assert ($v0 = 0x100)
+addiu $s1 $s1 0x1
+sll $s1 $v0 0x4
+#assert ($v0 = 0x10)
