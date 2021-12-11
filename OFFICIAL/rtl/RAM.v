@@ -1,12 +1,13 @@
 module RAM_module(
 input logic[31:0] addr,
-input data_in[31:0];
-input data_read;
-input data_write;
+    input data_in[31:0],
+input data_read,
+input data_write,
 
-
-output logic[31:0]data_out;
+output logic[31:0]data_out
 );
+    
+    
 // RAM
 reg [7:0] RAM [0:1000];
 
