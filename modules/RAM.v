@@ -7,7 +7,7 @@ input data_write;
 
 output logic[31:0]data_out;
 );
-// ROM
+// RAM
 reg [7:0] RAM [0:1000];
 
 always_comb begin
@@ -27,10 +27,6 @@ always_comb begin
     
 end
 
-assign instruction[7:0] = ROM_RESET_V[addr];
-assign instruction[15:8] = ROM_RESET_V[addr+1];
-assign instruction[23:16] = ROM_RESET_V[addr+2];
-assign instruction[31:24] = ROM_RESET_V[addr+3];
 
 
 initial begin
