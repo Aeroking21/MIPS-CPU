@@ -1,4 +1,4 @@
-lui s0 0x000F
+lui s0 0xFFFF
 ori v0  s0 0xFFFF
 jr $0
 
