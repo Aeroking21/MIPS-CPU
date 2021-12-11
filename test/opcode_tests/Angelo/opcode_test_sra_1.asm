@@ -1,4 +1,4 @@
 addiu s1 s1 0x8
-sra s1 v0 0x1
+sra v0 s1 0x1
 #assert (v0 == 0x4)
 
