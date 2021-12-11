@@ -44,7 +44,8 @@ module mips_cpu_harvard(
     logic shift_op2;
     logic[31:0] data;
     logic stall;
-
+    logic dummy;
+    
     
      
     reg signed [31:0] HI_reg, LO_reg; 
@@ -209,10 +210,13 @@ module mips_cpu_harvard(
 
 
 // full load/store instructions
-always_comb begin 
-    data_read = reset ? 0 : ( OP ==  LW || ( (OP == SH || OP == SB)  && stall) || OP == LB || OP == LBU || OP == LWL || OP == LWR || OP == LH || OP == LHU) ? 1: 0; // this has to be added to make sure this two bits are paralised during reset (since there can't be anything coming out of RAM)
-    data_write = reset ? 0: ((OP == SW || OP == SB || OP == SH) && !stall) ? 1: 0; // not sure if I can do this 
-end 
+
+ // this has to be added to make sure this two bits are paralised during reset (since there can't be anything coming out of RAM)
+ 
+assign data_read = reset ? 0 : ( ( (OP ==  LW) || ( (OP == SH || OP == SB )  && (stall  == 1) ) || (OP == LB) || (OP == LBU) || (OP == LWL) || (OP == LWR) || (OP == LH) || (OP == LHU) ) ? 1  :0 );
+
+assign data_write = reset ? 0: ((OP == SW || OP == SB || OP == SH) && !stall) ? 1: 0; // not sure if I can do this 
+
 
 
 // idk if these are needed 
