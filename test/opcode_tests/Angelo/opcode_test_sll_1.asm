@@ -1,3 +1,3 @@
 addiu s1 s1 0x1
-sll v0 s1 0x4
+sll s1 v0 0x4
 #assert (v0 = 0x10)
