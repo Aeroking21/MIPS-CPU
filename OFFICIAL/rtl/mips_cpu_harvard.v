@@ -67,7 +67,15 @@ module mips_cpu_harvard(
         B0 = 6'b000001, 
         BLEZ = 6'b000110,
         BGTZ = 6'b000111,
-        BNE = 6'b000101
+        BNE = 6'b000101,
+        LB = 6'b100000,
+        LBU = 6'b100100,
+        LH = 6'b 100001,
+        LHU = 6'b100101,
+        SB = 6'b101000,
+        SH = 6'b101001,
+        LWL = 6'b100010,
+        LWR = 6'b100110
         // load store opcodes will be enumerated in the loadstore block as there is where they are needed 
     } t_OP; 
 
@@ -202,8 +210,8 @@ module mips_cpu_harvard(
 
 // full load/store instructions
 always_comb begin 
-    data_read = reset ? 0 : (OP ==  LW || (OP ==SW && stall)) ? 1: 0; // this has to be added to make sure this two bits are paralised during reset (since there can't be anything coming out of RAM)
-    data_write = reset ? 0: (OP == SW && !stall) ? 1: 0; // not sure if I can do this 
+    data_read = reset ? 0 : ( OP ==  LW || ( (OP == SH || OP == SB)  && stall) || OP == LB || OP == LBU || OP == LWL || OP == LWR || OP == LH || OP == LHU) ? 1: 0; // this has to be added to make sure this two bits are paralised during reset (since there can't be anything coming out of RAM)
+    data_write = reset ? 0: ((OP == SW || OP == SB || OP == SH) && !stall) ? 1: 0; // not sure if I can do this 
 end 
 
 
