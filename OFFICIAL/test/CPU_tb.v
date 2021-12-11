@@ -79,10 +79,18 @@ module CPU_tb(
         .instruction(instr_readdata)
     );
 
+    RAM_module ramx(
+    .addr(data_address),
+    .data_in(data_writedata),
+    .data_read(data_read),
+    .data_write(data_write),
+    .data_out(data_readdata)
+    );
+
     mips_cpu_harvard CPU(
         .instr_readdata(instr_readdata), .clk(clk), .reset(reset), .clock_enable(clock_enable),
         .register_v0(register_v0), .instr_address(instr_address), .data_address(data_address), .data_writedata(data_writedata), .active(active), 
-        .data_readdata(data_readdata), .data_write(data_write)
+        .data_readdata(data_readdata), .data_write(data_write), .data_read(data_read)
     
     
     );
