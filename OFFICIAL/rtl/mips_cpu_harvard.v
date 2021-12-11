@@ -42,6 +42,8 @@ module mips_cpu_harvard(
     logic MSB;
     logic[31:0] instr;
     logic shift_op2;
+    logic[31:0] data;
+    logic stall;
 
     
      
@@ -54,7 +56,7 @@ module mips_cpu_harvard(
         ANDI = 6'b001100,
         SLTI = 6'b 001010,
         SLTIU= 6'b001011,
-        SW = 6'b101011,
+        SW = 6'b101011, // these will need to be deleted 
         LW = 6'b100011,
         XORI = 6'b001110,
         BEQ = 6'b000100,
@@ -66,6 +68,7 @@ module mips_cpu_harvard(
         BLEZ = 6'b000110,
         BGTZ = 6'b000111,
         BNE = 6'b000101
+        // load store opcodes will be enumerated in the loadstore block as there is where they are needed 
     } t_OP; 
 
     typedef enum logic[5:0]{
@@ -183,7 +186,7 @@ module mips_cpu_harvard(
 // register file reading 
     assign shamt = instr[10:6];
     assign op_1 = (OP == R && shift && !shift_op2) ? {27'b0, shamt} : reg_file[reg_addr1]; 
-    assign op_2 = (OP==R) ? reg_file[reg_addr2] : (OP == ANDI  || OP==OR  || OP==XORI) ? {16'b0, astart}: {{16{astart[15]}}, astart}; 
+    assign op_2 = (OP==R || OP==BEQ || OP==BNE) ? reg_file[reg_addr2] : {{16{astart[15]}}, astart}; 
     
 
     assign MSB = op_1[31];
@@ -199,9 +202,8 @@ module mips_cpu_harvard(
 
 // full load/store instructions
 always_comb begin 
-    data_read = reset ? 0 : (OP == LW) ? 1: 0; // this has to be added to make sure this two bits are paralised during reset (since there can't be anything coming out of RAM)
-    data_write = reset ? 0: (OP == SW) ? 1: 0; // not sure if I can do this 
-    data_address = (op_1 + astart); 
+    data_read = reset ? 0 : (OP ==  LW || (OP ==SW && stall)) ? 1: 0; // this has to be added to make sure this two bits are paralised during reset (since there can't be anything coming out of RAM)
+    data_write = reset ? 0: (OP == SW && !stall) ? 1: 0; // not sure if I can do this 
 end 
 
 
@@ -222,15 +224,15 @@ end
 //ops 
     always_comb begin
         case(OP)
-        LW: reg_write = data_readdata; 
+        LW: reg_write = data; 
         SW: data_writedata = op_1;
         JAL: reg_write = instr_address+4; 
         B0: begin 
             if (reg_addr2 == BGEZAL || reg_addr2 == BLTZAL) begin 
                 reg_write = instr_address +4;
             end 
-        end 
-        LUI: reg_write = {astart, 16'b0};
+        end
+        LUI: reg_write = {astart, 16'b0}; 
         R: begin
             if (funct == JALR) begin 
                 reg_write = instr_address + 4; 
@@ -247,7 +249,17 @@ end
                 reg_write = out; //this will set it to out even when it's doing Multiplication or division but it should be fine because the write enable shouldn't be one (even though it0s not very elegant, see what to do about this)
             end 
         end 
-        default: reg_write = out; //this heavily relies on the write enable being correct, should really address this in testing 
+        default: begin
+            if (subtype == Load) begin 
+                reg_write = data; 
+            end 
+            else if (subtype == Store) begin 
+                data_writedata = data; 
+            end 
+            else begin 
+                reg_write = out; //this heavily relies on the write enable being correct, should really address this in testing 
+            end 
+        end
         endcase 
     end 
 
@@ -281,6 +293,9 @@ end
         if (reset) begin 
             PC_next = 32'hBFC00000;
         end 
+        else if (stall) begin 
+            PC_next = instr_address; 
+        end 
 //R_type  
         else if (R_type) begin 
             if (funct == JR || funct == JALR ) begin 
@@ -301,7 +316,7 @@ end
 //I_type 
         else if (I_type) begin 
             case(subtype)
-            Branch: begin 
+            Branch: begin
                 //4 branches with equal opcode, they can be differentiated by looking at the bits in the places corresponding to reg_addr2 (rs)
                 if (OP == B0) begin 
                     if(((reg_addr2 == BGEZ || reg_addr2 == BGEZAL) && !MSB) || ((reg_addr2 == BLTZ || reg_addr2 == BLTZAL) && MSB)) begin  //associate functions and conditions 
@@ -313,7 +328,7 @@ end
                     end 
                 end 
                 // all other I_type branches 
-                else if ( ((OP == BEQ) && (op_1 == op_2)) || ((OP == BGTZ) && (op_1 > 0)) || ((OP == BLEZ) && (op_1 <= 0)) || ((OP == BNE) && (op_1 != op_2))) begin 
+                else if (((OP == BEQ) && (op_1 == op_2))|| ((OP == BGTZ) && (op_1 > 0))  || ((OP == BNE) && (op_1 != op_2)) || ((OP == BLEZ) && (op_1 <= 0))) begin 
                     PC_next = instr_address + (astart * 4); 
                 end
                 else begin 
@@ -388,5 +403,8 @@ end
     end 
     alu ALU(
         .op1(op_1), .op2(op_2), .alu_control(ALU_code), .low(LO), .high(HI), .out(out)
+    );
+    loadstore ls (
+        .OP(OP), .op_1(op_1), .astart(astart), .data_address(data_address), .read_data(data_readdata), .op_2(op_2), .clk(clk), .stall(stall), .data(data)
     );
 endmodule
