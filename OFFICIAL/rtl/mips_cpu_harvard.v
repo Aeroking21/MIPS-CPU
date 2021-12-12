@@ -213,10 +213,35 @@ module mips_cpu_harvard(
 // full load/store instructions
 
  // this has to be added to make sure this two bits are paralised during reset (since there can't be anything coming out of RAM)
- 
-assign data_read = reset ? 0 : ( ( (OP ==  LW) || ( (OP == SH || OP == SB )  && (stall  == 1) ) || (OP == LB) || (OP == LBU) || (OP == LWL) || (OP == LWR) || (OP == LH) || (OP == LHU) ) ? 1  :0 );
+always_comb begin 
+    if (reset) begin 
+        data_read = 0; 
+        data_write = 0; 
+    end 
+    else if (stall == 1 && (OP == SB|| OP==SH)) begin //this needed a special case as, when defined in a long strip of logic it caused problems by writing onthe RAM with undefined bits before reading it. we need to make them mutually exclusive for the cases of SB and SH
+        data_read = 1; 
+        data_write = 0; 
+    end 
+    else if (stall == 0 && (OP== SB || OP== SH)) begin 
+        data_read = 0; 
+        data_write = 1; 
+    end 
+    else if (OP == LW || OP == LB || OP == LBU || OP == LWL || OP == LWR || OP == LH || OP == LHU ) begin
+        data_read = 1; 
+        data_write = 0; 
+    end
+    else if (OP == SW) begin 
+        data_read = 0; 
+        data_write = 1; 
+    end 
+    else begin 
+        data_read = 0;
+        data_write = 0; 
+    end 
+end  
+//assign data_read = reset ? 0 : ( ( (OP ==  LW) || ( (OP == SH || OP == SB )  && (stall  == 1) ) || (OP == LB) || (OP == LBU) || (OP == LWL) || (OP == LWR) || (OP == LH) || (OP == LHU) ) ? 1  :0 );
 
-assign data_write = reset ? 0: ((OP == SW || OP == SB || OP == SH) && !stall) ? 1: 0; // not sure if I can do this 
+//assign data_write = reset ? 0: ((OP == SW || OP == SB || OP == SH) && !stall) ? 1: 0; // not sure if I can do this 
 
 
 
