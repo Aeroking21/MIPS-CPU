@@ -1,0 +1,6 @@
+jal 0x3f00004
+lui s1 0xffff
+addiu s1 s1 0x12
+jr $0
+addiu v0 $31 0x0
+jr $31
