@@ -99,10 +99,10 @@ module loadstore (
         SB: begin 
             if (stall) begin
                 case(byte_enable)
-                0: data_prev = {byte0, byte1, byte2, op_2_b3};
-                1: data_prev = {byte0, byte1, op_2_b3, byte3};
-                2: data_prev = {byte0, op_2_b3, byte2, byte3};
-                3: data_prev = {op_2_b3, byte1, byte2, byte3};
+                    0: data_prev = {byte3, byte2, byte1, op_2_b3};
+                    1: data_prev = {byte3, byte2, op_2_b3, byte0};
+                    2: data_prev = {byte3, op_2_b3, byte1, byte0};
+                    3: data_prev = {op_2_b3, byte2, byte1, byte0};
                 endcase
             end
             else begin 
