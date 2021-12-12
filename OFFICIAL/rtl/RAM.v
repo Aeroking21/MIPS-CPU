@@ -13,6 +13,9 @@ reg [7:0] RAM [0:1000];
 logic [7:0] byte0_in, byte1_in, byte2_in, byte3_in;
 
 assign byte0_in = data_in[7:0];
+assign byte1_in = data_in[15:8];
+assign byte2_in = data_in[23:16];
+assign byte3_in = data_in[31:24];
 
 assign data_out[7:0] = (data_read && !data_write) ? RAM[addr+0]:0; //make sure that the CPU won't do anything with data_out when it shouldn't as the value won't be right 
 assign data_out[15:8] = (data_read && !data_write) ? RAM[addr+1]:0;
