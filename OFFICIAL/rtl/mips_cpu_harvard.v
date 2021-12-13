@@ -384,7 +384,7 @@ end
         end 
     end 
     
-    assign destination = destination = (J_type || (R_type && (funct == JALR || funct == JR))) ? jump_to : branch_to[31:0]; 
+    assign destination = (J_type || (R_type && (funct == JALR || funct == JR))) ? jump_to : branch_to[31:0]; 
     
 //ALU 
 
