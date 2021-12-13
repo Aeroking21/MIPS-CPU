@@ -1,7 +1,6 @@
+addiu t2 $0 0x00F1
+sb t2 0x100(t2)
+lbu v0 0x100(t2)
+jr $0
 
-lui $t0.0xf000
-lui $t1.0x0ff0
-sw t1.0($t0)
-lbu $t2.0x2($t0)
-
-assert $t2 == 0xfff00000
+# (assert v0 = 241)
