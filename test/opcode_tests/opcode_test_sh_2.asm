@@ -1,0 +1,5 @@
+addiu s1 $0 0xF000
+addiu s1 s1 0x0FFF
+sh s1 0x2(v0)
+lw v0 0x2(v0)
+jr $0
