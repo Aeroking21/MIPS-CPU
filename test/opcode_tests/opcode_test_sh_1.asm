@@ -1,3 +1,6 @@
-lui $s1 0xfff0
-sh $s1 0x2($v0)
-#assert ($v0 == 0xfff0)
+addiu s1 $0 0xF000
+sh s1 0x2(v0)
+lw v0 0x2(v0)
+jr $0
+
+# (assert v0 = 61440)
