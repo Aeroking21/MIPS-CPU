@@ -6,8 +6,8 @@ module loadstore (
     input [31:0] op_2,
     input clk,
     input [5:0] OP,
-
-    output stall,
+    input stall,
+    
     output[31:0] data,
     output [31:0] data_address
 
@@ -36,7 +36,7 @@ module loadstore (
     assign sign1 = byte1[7];
     assign sign2 = byte2[7];
     assign sign3 = byte3[7];
-    assign stall = (((OP == SB) || (OP == SH)) && !stall_prev) ? 1:0;
+    
 
     typedef enum logic[5:0]{
         SW = 6'b101011,
