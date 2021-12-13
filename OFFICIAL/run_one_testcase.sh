@@ -6,7 +6,7 @@ Opcode="$2"
 >&2 echo "Currently testing Harvard CPU with ${Opcode}"
 
 
-TestCases="test/opcode_tests/opcode_test_${Opcode}_*.asm"
+TestCases="test/0-Assembly/opcode_test_${Opcode}_*.asm"
 
 for i in $TestCases; do
         TESTNAME=$(basename ${i} .asm)
@@ -25,7 +25,7 @@ for i in $TestCases; do
         >&2 echo "3 - Running test-bench"
         # Run the simulator, and capture all output to a file
         set +e
-        test/2-simulator/CPU_tb_$TESTNAME > test/3-output/CPU_tb_${i}.stdout
+        test/2-simulator/CPU_tb > test/3-output/CPU_tb_${i}.stdout
         # Capture the exit code of the simulator in a variable
         RESULT=$?
         set -e
