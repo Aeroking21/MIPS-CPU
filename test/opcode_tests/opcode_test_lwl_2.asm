@@ -1,0 +1,6 @@
+lui t0 0x0102
+sw t0 0x108($0)
+lwl v0 0x107($0)
+lwr v0 0x10a($0)
+addiu t1 $0 0x0
+jr $0
