@@ -122,9 +122,7 @@ module loadstore (
 
     assign data = data_temp; //for some reason you can't bind wires within an always_comb statement 
 
-    always_ff @(posedge clk) begin 
-        stall_prev <= stall; 
-    end
+
 endmodule
     
  
