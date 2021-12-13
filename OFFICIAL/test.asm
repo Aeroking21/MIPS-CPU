@@ -2,3 +2,5 @@ addiu v0 v0 0x1
 addiu v0 v0 0x1
 addiu v0 v0 0x1
 bne v1 v0 0xFFFF
+
+# assert

@@ -21,6 +21,8 @@ module CPU_tb(
     logic[31:0]  data_readdata;
    // logic[31:0] dummy;
 
+    //parameter RAM_INIT_FILE = "test/01-binary/countdown.hex";
+    parameter ROM_INIT_FILE = "test/01-binary/countdown.hex";
 
 
     
@@ -74,13 +76,14 @@ module CPU_tb(
 
     end
 
-       ROM_module MEM(
+       ROM_module #(ROM_INIT_FILE) MEM(
         .addr(instr_address),
         .instruction(instr_readdata)
     );
 
-    RAM_module ramx(
-    .addr(data_address),
+
+    RAM_module  ramx(
+    .addr(data_address), 
     .data_in(data_writedata),
     .data_read(data_read),
     .data_write(data_write),

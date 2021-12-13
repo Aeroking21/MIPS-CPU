@@ -16,7 +16,7 @@ assign instruction[31:24] = ROM_RESET_V[addr+3];
 
 
 initial begin
-    $readmemh("instructions.mem", ROM_RESET_V,3217031168);
+    $readmemh(ROM_INIT_FILE, ROM_RESET_V,3217031168);
     $display("Instruction = %h",ROM_RESET_V[32'hBFC00000]);
     $display("Instruction r = %h",ROM_RESET_V[3217031168]);
 end

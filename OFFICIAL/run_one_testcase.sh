@@ -5,11 +5,18 @@ Opcode="$2"
 
 >&2 echo "Currently testing Harvard CPU with ${Opcode}"
 
+gcc assemble.cpp -lstdc++ -o assemble.out
+
 
 TestCases="test/0-Assembly/opcode_test_${Opcode}_*.asm"
 
 for i in $TestCases; do
-        TESTNAME=$(basename ${i} .asm)
+        TESTNAME=${TESTNAME%%.*}
+
+        echo "$i"
+
+
+        ./assemble.out $i > test/testcases/${TESTNAME}_instructions.mem
         # i is basically the opcode test
 
 
@@ -17,7 +24,7 @@ for i in $TestCases; do
         # Verilog compilation -- ask for help, I have no clue
         iverilog -g 2012 \
         -s CPU_tb \
-        -P CPU_tb.RAM_INIT_FILE=\"test/testcases/${Opcode}_ram_init.mem\" \
+        -P CPU_tb.ROM_INIT_FILE=\"test/testcases/${Opcode}_instructions.mem\" \
         -o CPU_tb test/CPU_tb.v test/ROM.v rtl/mips_cpu_harvard.v rtl/alu.v rtl/loadstore.v rtl/RAM.v
 
 
@@ -25,10 +32,13 @@ for i in $TestCases; do
         >&2 echo "3 - Running test-bench"
         # Run the simulator, and capture all output to a file
         set +e
-        test/2-simulator/CPU_tb > test/3-output/CPU_tb_${i}.stdout
+        test/2-simulator/CPU_tb 
         # Capture the exit code of the simulator in a variable
         RESULT=$?
         set -e
+
+
+        
 
         if [[ "${RESULT}" -ne 0 ]] ; then
           # fail condition
@@ -74,21 +84,6 @@ for i in $TestCases; do
         fi
 
 done
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
