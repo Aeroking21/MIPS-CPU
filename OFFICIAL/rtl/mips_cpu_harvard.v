@@ -339,7 +339,7 @@ end
                 //4 branches with equal opcode, they can be differentiated by looking at the bits in the places corresponding to reg_addr2 (rs)
                 if (OP == B0) begin 
                     if(((reg_addr2 == BGEZ || reg_addr2 == BGEZAL) && !MSB) || ((reg_addr2 == BLTZ || reg_addr2 == BLTZAL) && MSB)) begin  //associate functions and conditions 
-                        PC_next = instr_address + (astart * 4);
+                        PC_next = $signed(instr_address) + ($signed(astart) * 4);
                         //I moved the saving of the register to the ops file 
                     end 
                     else begin 
@@ -348,7 +348,7 @@ end
                 end 
                 // all other I_type branches 
                 else if (((OP == BEQ) && (op_1 == op_2))|| ((OP == BGTZ) && (op_1 > 0))  || ((OP == BNE) && (op_1 != op_2)) || ((OP == BLEZ) && (op_1 <= 0))) begin 
-                    PC_next = instr_address + (astart * 4); 
+                    PC_next = $signed(instr_address) + ($signed(astart) * 4);
                 end
                 else begin 
                     PC_next = instr_address +4;

@@ -1,4 +1,4 @@
-addiu v1 $0 0x260B
-sw v1 0x104(v1)
-lw v0 0x104(v1)
-jr $0
+addiu v0 v0 0x1
+addiu v0 v0 0x1
+addiu v0 v0 0x1
+bne v1 v0 0xFFFF
