@@ -1,0 +1,13 @@
+addiu t0 $0 0x2301
+addiu t1 $0 0x2323
+addiu t3 $0 0x2345
+addiu t4 $0 0x2367
+lui s0 0x5522
+sb t0 0x000C(s0)
+sb t1 0x000D(s0)
+sb t3 0x000E(s0)
+sb t4 0x000F(s0)
+lw v0 0x000C(s0)
+jr $0
+
+# assert v0 = 0x01234567
