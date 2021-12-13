@@ -43,8 +43,8 @@ module mips_cpu_harvard(
     logic[31:0] instr;
     logic shift_op2;
     logic[31:0] data;
-    logic stall;
-    logic dummy;
+    logic stall, stall_prev;
+    
     
     
      
@@ -220,6 +220,10 @@ always_comb begin
 
     data_write = reset ? 0: ((OP == SW || OP == SB || OP == SH) && !stall) ? 1: 0; // not sure if I can do this 
 end  
+    
+always_ff @(posedge clk) begin 
+        stall_prev <= stall; 
+end
 
 
 
