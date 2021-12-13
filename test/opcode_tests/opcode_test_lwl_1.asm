@@ -1,8 +1,6 @@
-lui $t0.0xf000
-lui $t1.0xffff
-sw t1.0($t0)
-lwl $t2.0x2($t0)
-
-#
-
-assert $t2 == 0xff000000
+lui t0 0xa0
+addiu t1 $0 0xffff
+sw t0 0x100($0)
+lwl t1 0x101($0)
+addu v0 t1 $0
+jr $0
