@@ -1,7 +1,6 @@
 addiu s0 $0 0xFFFF
 bgtz $0 0x02
 addiu s1 $0 0x0002
-addiu v0 s1 0x0008
+addiu v0 s1 0x1000
 jr $0
-
-# assert(v==0)
+addiu v0 v0 0x0008
