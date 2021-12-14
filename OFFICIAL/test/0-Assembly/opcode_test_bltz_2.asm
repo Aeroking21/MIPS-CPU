@@ -1,8 +1,19 @@
-addiu $s0, $0, 0x0123
-bltz $s0, 14
-addu $v0, $0, $0
-
-
-0x60 : addu $v0, $0, $s0 
-
-# assert($v0 == 0x0000)
+addiu s0 $0 0xa123
+bltz s0 14
+addu v0 $0 $0
+sll $0 $0 0x0
+sll $0 $0 0x0
+sll $0 $0 0x0
+sll $0 $0 0x0
+sll $0 $0 0x0
+sll $0 $0 0x0
+sll $0 $0 0x0
+sll $0 $0 0x0
+sll $0 $0 0x0
+sll $0 $0 0x0
+sll $0 $0 0x0
+sll $0 $0 0x0
+sll $0 $0 0x0
+addiu v0 $0 0x1234
+jr $0
+sll $0 $0 0x0

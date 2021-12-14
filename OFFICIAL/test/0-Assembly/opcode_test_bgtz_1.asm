@@ -1,5 +1,7 @@
 addiu s0 $0 0x123
-bgtz s0 0x01
+bgtz s0 0x02
 addiu s1 $0 0x0002
+addiu v0 $0 0xffff
+sll $0 $0 0x0
 jr $0
 addiu v0 s1 0x0008
