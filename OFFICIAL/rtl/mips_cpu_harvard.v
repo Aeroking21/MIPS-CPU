@@ -329,7 +329,7 @@ end
             end 
         end 
         jump_to = (OP == R && ( funct == JR || funct == JALR)) ? op_1 : {PC_upper, target, 2'b00};
-        branch_to =  branch_to = sign_ext_address + sign_ext_offset +4; 
+        branch_to = sign_ext_address + sign_ext_offset +4; 
         jump =  ((R_type && (funct == JR || funct == JALR)) 
                 || J_type 
                 || (OP == B0 && 
