@@ -1,3 +1,4 @@
-addiu v0 $0 0x10000
+lui v0 0xffff
+addiu v0 $0 0xabcd
 jr $0
-addiu v0 $0 0x0000
+addiu v0 $0 0x0001
