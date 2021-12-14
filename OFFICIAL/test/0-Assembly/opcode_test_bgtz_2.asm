@@ -5,4 +5,3 @@ bgtz s0 0xfffe
 addiu s2 s2 0x1
 jr $0
 addu v0 v0 s2
-
