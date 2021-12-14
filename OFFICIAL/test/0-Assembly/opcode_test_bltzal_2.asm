@@ -1,0 +1,11 @@
+addiu t0 $0 0x0001
+bltzal t0 0x5
+lui v0 0x1020
+addiu v0 v0 0x0001
+jr $0
+addiu v0 v0 0x0200
+addiu v0 $0 0xffff
+addiu v0 v0 0x0002 
+jr $31
+addiu v0 v0 0x20
+addiu v0 $0 0x0fff
