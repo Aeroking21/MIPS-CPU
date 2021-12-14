@@ -1,4 +1,4 @@
-and v0 s0 s1
 jr $0
+and v0 s0 s1
 
-# assert(v0==0)
+
