@@ -64,7 +64,7 @@ module CPU_tb(
         $display("CPU started");
 
 
-        repeat (15) begin
+        repeat (20) begin
             @(posedge clk)
             $display("REG_V0 = %d", register_v0);
             
