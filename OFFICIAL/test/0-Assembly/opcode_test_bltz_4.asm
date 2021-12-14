@@ -1,8 +1,9 @@
-addiu s1 s1 0x2
-addiu s2 s2 0x1
-subu v0 s1 s2
+addiu s1 s1 0x1
+addiu s2 s2 0x2
+subu v0 s2 s1
 bltz v0 2
-j 0x3f00001
-addiu v0 v0 0x100
+addiu s1 s1 0x1
+j 0x3f00002
+sll $0 $0 0x0
 jr $0
-#v0 Becomes -1 (4294967295 unsigned), then adds to 255
+addiu v0 s1 0x100
