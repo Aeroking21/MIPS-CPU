@@ -1,8 +1,11 @@
-addiu s1 s1 0x2
-addiu s2 s2 0x1
-subu s3 s1 s2
-bltzal s3 2
-j 0x3f00001
-addiu s3 s3 0x100
-addu v0 v0 $31
+addiu t0 $0 0xffff
+bltzal t0 0x5
+lui v0 0x1020
+addiu v0 v0 0x0001
 jr $0
+addiu v0 v0 0x0200
+addiu v0 $0 0xffff
+addiu v0 v0 0x0002 
+jr $31
+addiu v0 v0 0x20
+addiu v0 $0 0x0fff1180
