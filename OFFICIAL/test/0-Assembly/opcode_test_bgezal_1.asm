@@ -1,10 +1,11 @@
 addiu t0 $0 0x0001
-addiu s1 $0 0x0001
-bgezal t0 0x2
-addiu v1 $0 0x000A
-addiu s3 v1 0x0005
-addiu s0 s3 0x0004
-addiu v0 $31 0x0
+bgezal t0 0x5
+lui v0 0x1020
+addiu v0 v0 0x0001
 jr $0
-
-# assert (v0 = 3217031180)
+addiu v0 v0 0x0200
+addiu v0 $0 0xffff
+addiu v0 v0 0x0002 
+jr $31
+addiu v0 v0 0x20
+addiu v0 $0 0x0fff1180)
