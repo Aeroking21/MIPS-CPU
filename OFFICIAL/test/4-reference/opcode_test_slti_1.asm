@@ -1,0 +1,3 @@
+addiu s1 s1 0x40
+slti v0 s1 0x20
+jr $0

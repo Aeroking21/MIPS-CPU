@@ -1,0 +1,5 @@
+addiu t0 $0 0x100
+lui t1 0xffff
+sw t1 0x0(t0)
+lwr v0 0x2(t0)
+jr $0
