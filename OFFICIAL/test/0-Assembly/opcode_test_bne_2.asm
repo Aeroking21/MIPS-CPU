@@ -1,7 +1,7 @@
-addiu s0 $0 0xFFFF
-addiu s1 $0 0xFFFF
-bne s0 s1 0x2
-addiu v1 $0 0x000A
-addiu s3 v1 0x0005
-addiu v0 s3 0x0004
+addiu s0 $0 0xffff
+addiu s1 $0 0xffff
+bne s0 s1 0x0002
+addiu v0 $0 0x000A
+addiu v0 v0 0x1111
 jr $0
+addiu v0 v0 0x0002
