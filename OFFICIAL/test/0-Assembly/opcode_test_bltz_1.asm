@@ -1,9 +1,8 @@
-addiu $t0, $0, 0x0123
-not $s0, $t0
-bltz $s0, 14
-addu $v0, $0, $0
-
-
-0x60 : addu $v0, $0, $s0 
-
-# assert($v0 == 0x0123)
+addiu s0 $0 0x123
+bltz s0 0x03
+addiu s1 $0 0x0002
+addiu v0 $0 0xffff
+jr $0
+sll $0 $0 0x0
+jr $0
+addiu v0 s0 0x0008
