@@ -22,7 +22,7 @@ for i in $TestCases; do
         ./assemble.out $i > test/testcases/${TESTNAME}_instructions.mem
 
 
-        >&2 echo "2 - Compiling test-bench"
+        # >&2 echo "2 - Compiling test-bench"
         # Verilog compilation -- ask for help, I have no clue
         # Make changes for source directory
         iverilog -g 2012 \
@@ -32,7 +32,7 @@ for i in $TestCases; do
 
 
 
-        >&2 echo "3 - Running test-bench for ${TESTNAME}"
+        # >&2 echo "3 - Running test-bench for ${TESTNAME}"
         # Run the simulator, and capture all output to a file
         set +e
         test/2-simulator/CPU_tb_${TESTNAME} > test/3-output/CPU_Harvard_${TESTNAME}.stdout
@@ -68,22 +68,24 @@ for i in $TestCases; do
         # this shouldn't have an effect when comparing to the reference files
 
         # >&2 echo " 4 - Comparing to the reference output files for ${TESTNAME}"
-        # # Here we compare the generated output files from part 3 with the pre-generated
-        # # output files in 4-reference
+        # Here we compare the generated output files from part 3 with the pre-generated
+        # output files in 4-reference
 
-        # set +e # +e used to stop the script failing if an error occurs
-        # >&2 diff -w test/4-reference/${TESTNAME}.out test/3-output/CPU_MU0_bus_${TESTNAME}.out
-        # RESULT=$? # output of this diff line stored in RESULT
-        # set -e
+        set +e # +e used to stop the script failing if an error occurs
+        diff -w test/4-reference/${TESTNAME}.out test/3-output/CPU_Harvard_${TESTNAME}.out
+        RESULT=$? # output of this diff line stored in RESULT
+        set -e
 
-        # # Based on whether differences were found, either pass or fail
-        # if [[ "${RESULT}" -ne 0 ]] ; then
-        #   # fail condition
-        #    echo "${TESTNAME} ${TESTNAME} Fail"
-        # else
-        #   # pass condition
-        #    echo "${TESTNAME} ${TESTNAME} Pass"
-        # fi
+        # Based on whether differences were found, either pass or fail
+        if [[ "${RESULT}" -ne 0 ]] ; then
+          # fail condition
+           echo "${TESTNAME} fail"
+        else
+          # pass condition
+           echo "${TESTNAME} Pass"
+        fi
+
+        echo " "
 
 done
 
