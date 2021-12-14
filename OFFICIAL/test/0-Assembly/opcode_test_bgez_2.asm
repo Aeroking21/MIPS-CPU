@@ -1,9 +1,7 @@
-addiu s0 $0 0x0002
-addu s1 $0 $2
-bgez s0 0x2
-addiu v1 $0 0x000A
-addiu s3 v1 0x0001
-addiu v0 s3 0x0002
+addiu s1 $0 0x1
+addiu s0 $0 0x0003
+subu s0 s0 s1
+bgez s0 0xfffe
+addiu s2 s2 0x1
 jr $0
-
-# assert(v == 3)
+addu v0 v0 s2
