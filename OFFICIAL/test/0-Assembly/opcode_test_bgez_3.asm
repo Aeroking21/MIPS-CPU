@@ -516,11 +516,3 @@ sll $0 $0 0x0
 addiu v0 v0 0xa
 jr $0 
 addiu v0 v0 0x1
-
-
-
-
-
-
-
-
