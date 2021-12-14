@@ -328,76 +328,33 @@ end
                 jump = 0; 
             end 
         end 
-//R_type  
-        else if (R_type) begin 
-            if (funct == JR || funct == JALR ) begin 
-                 jump_to = op_1;
-                jump = 1; 
-            end 
-            else begin 
-                PC_next = instr_address+4; 
-                jump = 0; 
-            end
-        end 
-//J_type
-        else if (J_type) begin 
-            //case(OP)
-            jump_to = {PC_upper, target, 2'b00}; 
-            jump = 1; 
-            //JAL: PC_next = {PC_upper, target, 2'b00};          
-            //default: PC_next = PC +4; 
-           // endcase
-        end 
-//I_type 
-        else if (I_type) begin 
-            case(subtype)
-            Branch: begin
-                //4 branches with equal opcode, they can be differentiated by looking at the bits in the places corresponding to reg_addr2 (rs)
-                if (OP == B0) begin 
-                    if(((reg_addr2 == BGEZ || reg_addr2 == BGEZAL) && !MSB) || ((reg_addr2 == BLTZ || reg_addr2 == BLTZAL) && MSB)) begin  //associate functions and conditions 
-                        branch_to = sign_ext_address + sign_ext_offset +4;
-                        jump =1;
-                        //PC_next = $signed(instr_address) + ($signed(astart) * 4);
-                        //I moved the saving of the register to the ops file 
-                    end 
-                    else begin 
-                        PC_next = instr_address +4; 
-                        jump = 0; 
-                    end 
-                end 
-                // all other I_type branches 
-                else if (((OP == BEQ) && (op_1 == op_2))|| ((OP == BGTZ) && (op_1 > 0))  || ((OP == BNE) && (op_1 != op_2)) || ((OP == BLEZ) && (op_1 <= 0))) begin 
-                    branch_to = sign_ext_address + sign_ext_offset +4;
-                    jump =1;
-                        //PC_next = $signed(instr_address) + ($signed(astart) * 4);
-                end
-                else begin 
-                    PC_next = instr_address +4;
-                    jump = 0; 
-                end
-            end
-            default: begin 
-                PC_next = instr_address +4; 
-                jump = 0; 
-            end 
-            endcase 
-        end 
+        jump_to = (OP == R && ( funct == JR || funct == JALR)) ? op_1 : {PC_upper, target, 2'b00};
+        branch_to =  branch_to = sign_ext_address + sign_ext_offset +4; 
+        jump =  ((R_type && (funct == JR || funct == JALR)) 
+                || J_type 
+                || (OP == B0 && 
+                        ((reg_addr2 == BGEZ || reg_addr2 == BGEZAL) && !MSB) 
+                        || ((reg_addr2 == BLTZ || reg_addr2 == BLTZAL) && MSB)) 
+                || ((OP == BEQ) && (op_1 == op_2))
+                || ((OP == BGTZ) && (op_1 > 0))  
+                || ((OP == BNE) && (op_1 != op_2)) 
+                || ((OP == BLEZ) && (op_1 <= 0))) ? 1 : 0; 
+
     end 
     
-    assign destination = (J_type || (R_type && (funct == JALR || funct == JR))) ? jump_to : branch_to[31:0]; 
     
-//ALU 
 
 
 
 //sequential block to actually change the PC address (since instruction fetching is combinatorial the new address must be defined only when we actually want the new instruction ie at the beginning of a new cycle)
     always_ff @(posedge clk) begin 
+         destination <= stall ? destination : (J_type || (R_type && (funct == JALR || funct == JR))) ? jump_to : branch_to[31:0]; // CHANGE
         jump_now <= jump; 
-        if (jump_now) begin 
+        if (jump_now && !stall && !reset) begin 
             instr_address <= destination; 
         end 
         else begin 
-            instr_address <= PC_next; 
+           instr_address <= (reset || stall ) ? PC_next : instr_address_next; 
         end
     end 
 
