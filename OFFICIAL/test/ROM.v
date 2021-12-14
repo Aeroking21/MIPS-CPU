@@ -7,7 +7,7 @@ output logic[31:0]instruction
 );
 // ROM
 reg [7:0] ROM_0 [0:255];
-    reg [7:0] ROM_RESET_V [3217031168:3217031168+3500];
+reg [7:0] ROM_RESET_V [3217031168:3217031168+3000];
 parameter ROM_INIT_FILE = "";
 
 assign instruction[7:0] = ROM_RESET_V[addr];

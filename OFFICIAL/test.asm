@@ -1,3 +1,4 @@
-addiu v1 $0 0xffff
+addiu t0 $0 0xf123
+mthi t0
 jr $0
-addiu v0 v1 0xffff
+mfhi v0

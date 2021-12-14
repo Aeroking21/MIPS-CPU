@@ -9,8 +9,9 @@ output logic[31:0]data_out
 );
 
 // RAM
-reg [7:0] RAM [0:1000];
+reg [7:0] RAM [0:100];
 logic [7:0] byte0_in, byte1_in, byte2_in, byte3_in;
+parameter ROM_INIT_FILE = "";
 
 assign byte0_in = data_in[7:0];
 assign byte1_in = data_in[15:8];
@@ -41,6 +42,7 @@ end
 
 initial begin
     $readmemh("data.mem", RAM, 0, 1000);
+    //$readmemh(RAM_INIT_FILE, RAM, 0);
 end
 
 
