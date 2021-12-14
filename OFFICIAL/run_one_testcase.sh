@@ -18,8 +18,8 @@ for i in $TestCases; do
         # echo "$TESTNAME"
 
 
+        # This basically converts the assembly to hex using the assembler
         ./assemble.out $i > test/testcases/${TESTNAME}_instructions.mem
-        # # i is basically the opcode test
 
 
         >&2 echo "2 - Compiling test-bench"
@@ -32,10 +32,10 @@ for i in $TestCases; do
 
 
 
-        >&2 echo "3 - Running test-bench"
+        >&2 echo "3 - Running test-bench for ${TESTNAME}"
         # Run the simulator, and capture all output to a file
         set +e
-        test/2-simulator/CPU_tb_${TESTNAME} > test/3-output/CPU_tb_${TESTNAME}.stdout
+        test/2-simulator/CPU_tb_${TESTNAME} > test/3-output/CPU_Harvard_bus_${TESTNAME}.stdout
         # Capture the exit code of the simulator in a variable
         RESULT=$?
         set -e
@@ -48,16 +48,16 @@ for i in $TestCases; do
            continue
         fi
 
-        # # we now need to extract the necessary lines with the prefix "RESULT : "
-        # # The associated value is then output and written into a .out file
-        # # so that we can compare it to the reference output result files
-        # PATTERN="RESULT : "
-        # NOTHING=""
+        # we now need to extract the necessary lines with the prefix "RESULT : "
+        # The associated value is then output and written into a .out file
+        # so that we can compare it to the reference output result files
+        PATTERN="RESULT = "
+        NOTHING=""
 
-        # set +e
-        # # grep grabs the lines with the prefix described by PATTERN and outputs them to a new file
-        # grep "${PATTERN}" test/3-output/CPU_Harvard_bus_${TESTNAME}.stdout > \
-        # test/3-output/CPU_Harvard_bus_${TESTNAME}.result-lines
+        set +e
+        # grep grabs the lines with the prefix described by PATTERN and outputs them to a new file
+        grep "${PATTERN}" test/3-output/CPU_Harvard_bus_${TESTNAME}.stdout > \
+        test/3-output/CPU_Harvard_bus_${TESTNAME}.result-lines
 
         # # Now we need to remove the "RESULT : " bit and maintain the correct value
         # set -e

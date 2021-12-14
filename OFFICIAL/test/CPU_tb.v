@@ -66,13 +66,13 @@ module CPU_tb(
 
         repeat (20) begin
             @(posedge clk)
-            $display("REG_V0 = %d", register_v0);
+            $display("REG_V0 =  %h", register_v0);
             
         end 
 
         
         
-
+        $display("RESULT =  %h", register_v0);
 
     end
 
