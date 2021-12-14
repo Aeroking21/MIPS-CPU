@@ -32,22 +32,21 @@ for i in $TestCases; do
 
 
 
-        # >&2 echo "3 - Running test-bench"
-        # # Run the simulator, and capture all output to a file
-        # set +e
-        # test/2-simulator/CPU_tb 
-        # # Capture the exit code of the simulator in a variable
-        # RESULT=$?
-        # set -e
+        >&2 echo "3 - Running test-bench"
+        # Run the simulator, and capture all output to a file
+        set +e
+        test/2-simulator/CPU_tb_${TESTNAME} > test/3-output/CPU_tb_${TESTNAME}.stdout
+        # Capture the exit code of the simulator in a variable
+        RESULT=$?
+        set -e
 
 
-        
-
-        # if [[ "${RESULT}" -ne 0 ]] ; then
-        #   # fail condition
-        #    echo "${TESTNAME} Fail"
-        #    continue
-        # fi
+    
+        if [[ "${RESULT}" -ne 0 ]] ; then
+          # fail condition
+           echo "${TESTNAME} Fail"
+           continue
+        fi
 
         # # we now need to extract the necessary lines with the prefix "RESULT : "
         # # The associated value is then output and written into a .out file
