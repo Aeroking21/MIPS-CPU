@@ -1,7 +1,1 @@
-addiu s0 $0 0x5
-addiu s1 s1 0x3
-bne s1 s0 0x3
-addiu v0 v0 0x1
-jr $0
-addiu v0 v0 0xffff
-jr $0
+00000003
