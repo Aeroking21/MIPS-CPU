@@ -4,6 +4,7 @@ set -eou pipefail
 Opcode="$2"
 
 >&2 echo "Currently testing Harvard CPU with ${Opcode}"
+echo " "
 
 gcc assemble.cpp -lstdc++ -o assemble.out
 
@@ -32,7 +33,7 @@ for i in $TestCases; do
 
 
 
-        # >&2 echo "3 - Running test-bench for ${TESTNAME}"
+        # >&2 echo "--3 - Running test-bench for ${TESTNAME}"
         # Run the simulator, and capture all output to a file
         set +e
         test/2-simulator/CPU_tb_${TESTNAME} > test/3-output/CPU_Harvard_${TESTNAME}.stdout
@@ -67,26 +68,25 @@ for i in $TestCases; do
         # Note that the output of this will have spaces before the actual value but
         # this shouldn't have an effect when comparing to the reference files
 
-        # >&2 echo " 4 - Comparing to the reference output files for ${TESTNAME}"
+       # >&2 echo "----4 - Comparing to the reference output files for ${TESTNAME}"
         # Here we compare the generated output files from part 3 with the pre-generated
         # output files in 4-reference
 
         set +e # +e used to stop the script failing if an error occurs
-        diff -w test/4-reference/${TESTNAME}.out test/3-output/CPU_Harvard_${TESTNAME}.out
+        diff -w test/4-reference/${TESTNAME}.out test/3-output/CPU_Harvard_${TESTNAME}.out  > /dev/null 2>&1
         RESULT=$? # output of this diff line stored in RESULT
         set -e
 
         # Based on whether differences were found, either pass or fail
         if [[ "${RESULT}" -ne 0 ]] ; then
           # fail condition
-           echo "${TESTNAME} fail"
+           echo "${TESTNAME}      Fail"
         else
           # pass condition
            echo "${TESTNAME} Pass"
         fi
 
         echo " "
-
 done
 
 
