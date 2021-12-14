@@ -35,7 +35,7 @@ for i in $TestCases; do
         >&2 echo "3 - Running test-bench for ${TESTNAME}"
         # Run the simulator, and capture all output to a file
         set +e
-        test/2-simulator/CPU_tb_${TESTNAME} > test/3-output/CPU_Harvard_bus_${TESTNAME}.stdout
+        test/2-simulator/CPU_tb_${TESTNAME} > test/3-output/CPU_Harvard_${TESTNAME}.stdout
         # Capture the exit code of the simulator in a variable
         RESULT=$?
         set -e
@@ -56,16 +56,16 @@ for i in $TestCases; do
 
         set +e
         # grep grabs the lines with the prefix described by PATTERN and outputs them to a new file
-        grep "${PATTERN}" test/3-output/CPU_Harvard_bus_${TESTNAME}.stdout > \
-        test/3-output/CPU_Harvard_bus_${TESTNAME}.result-lines
+        grep "${PATTERN}" test/3-output/CPU_Harvard_${TESTNAME}.stdout > \
+        test/3-output/CPU_Harvard_${TESTNAME}.result-lines
 
-        # # Now we need to remove the "RESULT : " bit and maintain the correct value
-        # set -e
-        # sed -e "s/${PATTERN}/${NOTHING}/g" test/3-output/CPU_MU0_bus_${TESTNAME}.result-lines \
-        # > test/3-output/CPU_MU0_bus_${TESTNAME}.out
-        # # Actual final result of the test case is stored in a .out file
-        # # Note that the output of this will have spaces before the actual value but
-        # # this shouldn't have an effect when comparing to the reference files
+        # Now we need to remove the "RESULT : " bit and maintain the correct value
+        set -e
+        sed -e "s/${PATTERN}/${NOTHING}/g" test/3-output/CPU_Harvard_${TESTNAME}.result-lines \
+        > test/3-output/CPU_Harvard_${TESTNAME}.out
+        # Actual final result of the test case is stored in a .out file
+        # Note that the output of this will have spaces before the actual value but
+        # this shouldn't have an effect when comparing to the reference files
 
         # >&2 echo " 4 - Comparing to the reference output files for ${TESTNAME}"
         # # Here we compare the generated output files from part 3 with the pre-generated
