@@ -8,4 +8,4 @@ addiu v0 $0 0xffff
 addiu v0 v0 0x0002 
 jr $31
 addiu v0 v0 0x20
-addiu v0 $0 0x0fff1180)
+addiu v0 $0 0x0fff1180
