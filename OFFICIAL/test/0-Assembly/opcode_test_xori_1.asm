@@ -1,4 +1,3 @@
-addiu s1 s1 0xffff
-xori s1 v0 0xffff0000
-
-#assert (v0 == 0xffffffff)
+addiu s1 $0 0xffff
+jr $0
+xori v0 s1 0xffff
