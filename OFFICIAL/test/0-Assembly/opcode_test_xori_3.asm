@@ -1,5 +1,3 @@
-addiu s0 $0 0xFFFF
-xori v0 s0 0xFFFF
+addiu s0 $0 0x0000
 jr $0
-
-# assert v0 = 0xFFFF0000
+xori v0 s0 0x0000
