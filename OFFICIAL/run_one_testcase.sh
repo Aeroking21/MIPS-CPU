@@ -29,7 +29,6 @@ for i in $TestCases; do
         iverilog -g 2012 \
         -s CPU_tb \
         -P CPU_tb.ROM_INIT_FILE=\"test/testcases/${TESTNAME}_instructions.mem\" \
-        -P CPU_tb.RAM_INIT_FILE=\"test/test_data/${TESTNAME}_data.mem\" \
         -o test/2-simulator/CPU_tb_${TESTNAME} test/CPU_tb.v test/ROM.v rtl/mips_cpu_harvard.v rtl/alu.v rtl/loadstore.v rtl/RAM.v
 
 

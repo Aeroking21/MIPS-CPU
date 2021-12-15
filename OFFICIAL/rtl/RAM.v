@@ -9,9 +9,9 @@ output logic[31:0]data_out
 );
 
 // RAM
-reg [7:0] RAM [0:100];
+reg [7:0] RAM [0:1000];
 logic [7:0] byte0_in, byte1_in, byte2_in, byte3_in;
-parameter ROM_INIT_FILE = "";
+//parameter RAM_INIT_FILE = "";
 
 assign byte0_in = data_in[7:0];
 assign byte1_in = data_in[15:8];
