@@ -22,7 +22,7 @@ module CPU_tb(
    // logic[31:0] dummy;
 
     //parameter RAM_INIT_FILE = "test/01-binary/countdown.hex";
-    parameter ROM_INIT_FILE = "test/01-binary/countdown.hex";
+    parameter ROM_INIT_FILE = "";
 
 
     
