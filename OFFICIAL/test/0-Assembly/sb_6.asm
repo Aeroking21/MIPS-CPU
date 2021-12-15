@@ -1,8 +1,8 @@
 addiu t0 $0 0x23DA
 addiu s0 $0 0x0020
-sb t0 0x0000(s0)
-lw v0 0x0000(s0)
+sb t0 0x000C(s0)
 jr $0
+lw v0 0x002C($0)
 
 .data
 00 00 00 F3
@@ -17,5 +17,3 @@ jr $0
 36 00 00 F3
 40 00 00 F3
 44 00 00 00
-
-# assert v0 = DA0000F3
