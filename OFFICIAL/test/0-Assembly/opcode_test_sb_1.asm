@@ -1,3 +1,13 @@
-lui $s1 0xff
-sb $s1 0x1($v0)
-# assert ($v0 == 0xff)
+addiu t1 $0 0x0000C
+addiu s1 $0 0x0ffe
+sb s1 0x003(t1)
+jr $0
+lw v0 0x0000(t1)
+
+.data
+00 00 00 00
+04 00 00 00
+08 00 00 00
+12 00 00 00
+16 00 00 00
+20 00 00 00
