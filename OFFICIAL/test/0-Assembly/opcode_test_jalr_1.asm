@@ -1,8 +1,12 @@
-addiu s1 s1 0xBFC0
-addiu s2 s2 0x8
-addiu s2 s2 0x8
-sllv s3 s1 s2
-addiu s3 s3 28
-jalr s3
-addiu v0 v0 1
-addu v0 v0 $31
+lui s1 0xBFC0
+addiu s1 s1 0x001c
+jalr s1
+addiu s2 s2 0x1110
+jr $0
+addiu v0 s2 0x1
+addiu s2 s2 0xffff
+addiu s2 s2 0x1 
+jr $31
+sll $0 $0 0x0
+jr $0
+addiu v0 v0 0xffff

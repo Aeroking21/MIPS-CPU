@@ -1,7 +1,6 @@
-lui $t0.0xf000
-lui $t1.0x0ff0
-sw t1.0($t0)
-lb $t2.0x2($t0)
-
-assert $t2 == 0xfff00000
+lui t1 0xf011
+addiu t1 $0 0x0ff0
+sw t1 0x0($0)
+jr $0
+lb v0 0x2(t0)
 

@@ -1,3 +1,7 @@
-addiu v0 s1 0x80085
-jr v0
-jr 0
+lui s1 0xBFC0
+addiu s1 s1 0x0014
+jr s1
+addiu v0 v0 0x1110
+addiu v0 $0 0xffff
+jr $0
+addiu v0 v0 0x1
