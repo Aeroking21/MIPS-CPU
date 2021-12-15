@@ -5,8 +5,3 @@ bne v1 s0 0xFFFd
 addiu v0 v0 0x1
 jr $0
 sll $0 $0 0x0
-addiu v1 $0 0x6
-addiu v0 v0 0x1
-addiu v0 v0 0x1
-bne v1 v0 0xFFFF
-jr $0
