@@ -1,3 +1,2 @@
-lui $vo.0x0000ffff
-
-assert v0 == 0xffff0000
+jr $0 
+lui v0 0xfdce
