@@ -1,5 +1,4 @@
-lui s1 0xffff
-sra s1 s1 0x10
-subu v0 s1 $0
+addiu s1 $0 0xffff
+addiu s2 $0 0xabcd
 jr $0
-#subtracting 0 from s1 makes no change
+subu v0 s2 s1

@@ -1,4 +1,5 @@
-lui v0 0x8000
-srl v0 v0 0x0
+addiu s1 s1 0xfff
+sll s1 v0 0x14 
+srl v0 v0 0x4
 jr $0
-#assert (v0 == 0x80000000)
+srl v0 v0 0x4  
