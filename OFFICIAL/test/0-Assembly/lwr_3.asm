@@ -1,5 +1,5 @@
 lui t0 0xffff
 addiu v0 $0 0x1111
 sw t0 0x108($0)
-lwr v0 0x109($0)
 jr $0
+lwr v0 0x109($0)
