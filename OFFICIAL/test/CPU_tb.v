@@ -21,7 +21,7 @@ module CPU_tb(
     logic[31:0]  data_readdata;
    // logic[31:0] dummy;
 
-    //parameter RAM_INIT_FILE = "test/01-binary/countdown.hex";
+    parameter RAM_INIT_FILE = "";
     parameter ROM_INIT_FILE = "";
     
 
@@ -87,11 +87,7 @@ module CPU_tb(
     );
 
 
-<<<<<<< Updated upstream
-    RAM_module ramx(
-=======
-    RAM_module  #(RAM_INIT_FILE) ramx(
->>>>>>> Stashed changes
+    RAM_module #(RAM_INIT_FILE) ramx(
     .addr(data_address), 
     .data_in(data_writedata),
     .data_read(data_read),

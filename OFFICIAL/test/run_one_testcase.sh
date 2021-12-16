@@ -37,7 +37,7 @@ for i in $TestCases; do
     
         if [[ "${RESULT}" -ne 0 ]] ; then
           # fail condition
-          echo " $TESTNAME $Opcode Fail"
+          echo "  $TESTNAME  $Opcode  Fail"
           continue
         fi
 
@@ -72,10 +72,10 @@ for i in $TestCases; do
         # Based on whether differences were found, either pass or fail
         if [[ "${RESULT}" -ne 0 ]] ; then
           # fail condition
-          echo " $TESTNAME $Opcode Fail"
+          echo "  $TESTNAME  $Opcode  Fail"
         else
           # pass condition
-          echo " $TESTNAME $Opcode Pass"
+          echo "  $TESTNAME  $Opcode  Pass"
         fi
 
 done
