@@ -20,7 +20,7 @@ for i in $TestCases; do
         iverilog -g 2012 \
         -s CPU_tb \
         -P CPU_tb.ROM_INIT_FILE=\"test/1-binary/${TESTNAME}_instructions.mem\" \
-        #-P CPU_tb.RAM_INIT_FILE=\"test/5-data/${TESTNAME}_data.mem\" \
+        -P CPU_tb.RAM_INIT_FILE=\"test/5-data/data_${TESTNAME}.mem\" \
         -o test/2-simulator/CPU_tb_${TESTNAME} test/CPU_tb.v test/ROM.v ${1}/mips_cpu_harvard.v ${1}/alu.v ${1}/loadstore.v ${1}/RAM.v
 
 
@@ -37,8 +37,8 @@ for i in $TestCases; do
     
         if [[ "${RESULT}" -ne 0 ]] ; then
           # fail condition
-           echo "${TESTNAME} Fail"
-           continue
+          echo " $TESTNAME $Opcode Fail"
+          continue
         fi
 
         # we now need to extract the necessary lines with the prefix "RESULT : "
@@ -72,10 +72,10 @@ for i in $TestCases; do
         # Based on whether differences were found, either pass or fail
         if [[ "${RESULT}" -ne 0 ]] ; then
           # fail condition
-           echo " $TESTNAME $Opcode Fail"
+          echo " $TESTNAME $Opcode Fail"
         else
           # pass condition
-           echo " $TESTNAME $Opcode Pass"
+          echo " $TESTNAME $Opcode Pass"
         fi
 
 done
