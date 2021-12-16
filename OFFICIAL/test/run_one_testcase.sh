@@ -11,7 +11,7 @@ for i in $TestCases; do
 
  
         #This basically converts the assembly to hex using the assembler
-        ./assemble.out $i > test/testcases/${TESTNAME}_instructions.mem
+        #./assemble.out $i > test/testcases/${TESTNAME}_instructions.mem
 
 
         #>&2 echo "2 - Compiling test-bench"
@@ -19,7 +19,7 @@ for i in $TestCases; do
         # Make changes for source directory
         iverilog -g 2012 \
         -s CPU_tb \
-        -P CPU_tb.ROM_INIT_FILE=\"test/testcases/${TESTNAME}_instructions.mem\" \
+        -P CPU_tb.ROM_INIT_FILE=\"test/1-binary/${TESTNAME}_instructions.mem\" \
         -o test/2-simulator/CPU_tb_${TESTNAME} test/CPU_tb.v test/ROM.v ${1}/mips_cpu_harvard.v ${1}/alu.v ${1}/loadstore.v ${1}/RAM.v
 
 
@@ -27,7 +27,7 @@ for i in $TestCases; do
         # >&2 echo "--3 - Running test-bench for ${TESTNAME}"
         # Run the simulator, and capture all output to a file
         set +e
-        test/2-simulator/CPU_tb_${TESTNAME} > test/3-output/CPU_Harvard_${TESTNAME}.stdout
+        test/2-simulator/CPU_tb_${TESTNAME} > test/3-output/cpu_harvard_${TESTNAME}.stdout
         # Capture the exit code of the simulator in a variable
         RESULT=$?
         set -e
@@ -48,13 +48,13 @@ for i in $TestCases; do
 
         set +e
         # grep grabs the lines with the prefix described by PATTERN and outputs them to a new file
-        grep "${PATTERN}" test/3-output/CPU_Harvard_${TESTNAME}.stdout > \
-        test/3-output/CPU_Harvard_${TESTNAME}.result-lines
+        grep "${PATTERN}" test/3-output/cpu_harvard_${TESTNAME}.stdout > \
+        test/3-output/cpu_harvard_${TESTNAME}.result-lines
 
         # Now we need to remove the "RESULT : " bit and maintain the correct value
         set -e
-        sed -e "s/${PATTERN}/${NOTHING}/g" test/3-output/CPU_Harvard_${TESTNAME}.result-lines \
-        > test/3-output/CPU_Harvard_${TESTNAME}.out
+        sed -e "s/${PATTERN}/${NOTHING}/g" test/3-output/cpu_harvard_${TESTNAME}.result-lines \
+        > test/3-output/cpu_harvard_${TESTNAME}.out
         # Actual final result of the test case is stored in a .out file
         # Note that the output of this will have spaces before the actual value but
         # this shouldn't have an effect when comparing to the reference files
@@ -64,7 +64,7 @@ for i in $TestCases; do
        # output files in 4-reference
 
         set +e # +e used to stop the script failing if an error occurs
-        diff -w test/4-reference/${TESTNAME}.out test/3-output/CPU_Harvard_${TESTNAME}.out  > /dev/null 2>&1
+        diff -w test/4-reference/${TESTNAME}.out test/3-output/cpu_harvard_${TESTNAME}.out  > /dev/null 2>&1
         RESULT=$? # output of this diff line stored in RESULT
         set -e
 
