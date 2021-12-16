@@ -10,5 +10,5 @@ INSTRUCTIONS="test/0-Assembly/*_1.asm"
 for i in ${INSTRUCTIONS} ; do
     INSTR=$(basename ${i} _1.asm)
     test/run_one_testcase.sh ${1} ${INSTR}
-    echo "------------------------"
+    echo "-----------------------"
 done
