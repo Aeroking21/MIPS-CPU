@@ -1,7 +1,5 @@
-addiu t3 $0 0x0fff
-addiu t4 $0 0x0fff
-multu t4 t3
-mflo v0
+addiu s1 $0 0x0000
+addiu t2 $0 0xffff
+multu s1 t2
 jr $0
-
-# v0 = 16769025
+mflo v0

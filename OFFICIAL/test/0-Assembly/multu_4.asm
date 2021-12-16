@@ -1,7 +1,5 @@
-addiu t3 $0 0x0fff
-addiu t4 $0 0x0fff
-multu t4 t3
-mfhi v0
+addiu t0 $0 0x0002
+addiu t1 $0 0xFFFF
+multu t0 t1
 jr $0
-
-#v0 = 0x00000000
+mfhi v0

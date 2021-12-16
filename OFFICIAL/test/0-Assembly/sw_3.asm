@@ -1,6 +1,5 @@
-lui s2 0x0111
-sw s2 0x104(s2)
-lw v0 0x104(s2)
-jr $0
-
-# assert v0
+addiu s1 s1 0x4567
+addiu s2 s2 0x105
+sw s1 0xffff(s2)
+jr $0 
+lw v0 0x104($0)
