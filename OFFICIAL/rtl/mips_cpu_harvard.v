@@ -200,7 +200,8 @@ module mips_cpu_harvard(
 // register file reading 
     assign shamt = instr[10:6];
     assign op_1 = (OP == R && shift && !shift_op2) ? {27'b0, shamt} : reg_file[reg_addr1]; 
-    assign op_2 = (OP==R || OP==BEQ || OP==BNE || OP == SW || OP == SH || OP == SB || OP == LW || OP == LHU || OP == LH || OP == LBU || OP == LB || OP == LWL || OP == LWR) ? reg_file[reg_addr2] : {{16{astart[15]}}, astart}; 
+    assign op_2 = (OP==R || OP==BEQ || OP==BNE || OP == SW || OP == SH || OP == SB || OP == LW || OP == LHU || OP == LH || OP == LBU || OP == LB || OP == LWL || OP == LWR) ? reg_file[reg_addr2] :  (OP == XORI || OP == ORI || OP == ANDI) ? {16'b0, astart} : {{16{astart[15]}}, astart};  
+    
 
     
 
