@@ -1,15 +1,2 @@
 ## addiu
 Bug with `write_enable`, it wasn't turning high when required
-
-instruc.mem:
-24 08 23 01
-24 09 23 23
-24 0B 23 45
-24 0C 23 67
-26 10 03 20
-A2 08 00 0C
-A2 09 00 0D
-A2 0B 00 0E
-A2 0C 00 0F
-00 00 00 08
-8E 02 00 0C
