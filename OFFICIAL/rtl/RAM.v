@@ -41,7 +41,7 @@ end
 
 
 initial begin
-    $readmemh("data.mem", RAM, 0, 1000);
+    $readmemh("data.mem", RAM, 256, 1000);
     //$readmemh(RAM_INIT_FILE, RAM, 0);
 end
 
