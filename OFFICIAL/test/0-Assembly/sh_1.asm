@@ -1,6 +1,5 @@
-addiu s1 $0 0xF000
-sh s1 0x2(v0)
-lw v0 0x2(v0)
+addiu t0 $0 0x100
+addiu s1 $0 0xF0ab
+sh s1 0x0(t0)
 jr $0
-
-# (assert v0 = 61440)
+lw v0 0x0(t0)

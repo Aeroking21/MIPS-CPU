@@ -1,3 +1,3 @@
 lui s1 0xffff
-sltiu v0 s1 0xffff
 jr $0
+sltiu v0 s1 0xffff
