@@ -13,20 +13,12 @@ module mips_cpu_harvard(
     output logic data_read,
     output logic data_write
     
-
-    //DEBUGGING
-    //output logic [5:0] OP, 
-    //output logic [5:0] reg_addrw,
-    //output logic[31:0] reg_write,
-    //output logic[31:0] reg_t0, 
-    //output logic [31:0] reg_t1,
 );
 
     logic[5:0] OP; 
     logic[5:0] funct;
     logic[31:0] op_1, op_2, jump_address, PC_next, reg_write, out, HI, LO, HI_m, LO_m;
-    logic[5:0] reg_addr1, reg_addr2, reg_addrw; //reg_addrw;
-    logic[4:0] shamt;
+    logic[5:0] reg_addr1, reg_addr2, reg_addrw; 
     logic[15:0] astart; 
     logic next_active; 
     logic reset_prev; 
@@ -61,7 +53,7 @@ module mips_cpu_harvard(
         ANDI = 6'b001100,
         SLTI = 6'b 001010,
         SLTIU= 6'b001011,
-        SW = 6'b101011, // these will need to be deleted 
+        SW = 6'b101011, 
         LW = 6'b100011,
         XORI = 6'b001110,
         BEQ = 6'b000100,
@@ -81,7 +73,6 @@ module mips_cpu_harvard(
         SH = 6'b101001,
         LWL = 6'b100010,
         LWR = 6'b100110
-        // load store opcodes will be enumerated in the loadstore block as there is where they are needed 
     } t_OP; 
 
     typedef enum logic[5:0]{
@@ -125,8 +116,7 @@ module mips_cpu_harvard(
         BGEZAL = 5'b10001
     }B0_t; 
 
-// Instruction decoding and control signals 
-    //correct the endianness
+// INSTRUCTION DECODER and CONTROL SIGNALS  
     assign instr = {instr_readdata[7:0], instr_readdata[15:8], instr_readdata[23:16], instr_readdata[31:24]};
     assign OP = instr[31:26]; 
     assign funct = instr[5:0];
@@ -147,7 +137,7 @@ module mips_cpu_harvard(
     assign astart = instr[15:0]; 
 
 
-// ALU control definition 
+// ALU_CONTROL  
     always_comb begin 
 
         if (OP==R) begin 
@@ -169,7 +159,6 @@ module mips_cpu_harvard(
                 DIV: ALU_code = 4'b1101; 
                 endcase
             end
-            // here I need something for the R type operations not included in this definition
         end 
         else begin
             ALU_code = {1'b0, OP_tail}; 
@@ -177,13 +166,11 @@ module mips_cpu_harvard(
     end 
     
             
-        
-    reg [31:0] reg_file [31:0]; // need to sign extend partial loads here or elsewhere? 
-
-
+//REG_FILE related DECODER
+    reg [31:0] reg_file [31:0]; 
     assign reg_addr1 = instr[25:21]; 
     assign reg_addr2 = instr[20:16]; 
-    assign reg_addrw = (OP == R) ? instr[15:11] : ((OP==B0 && (reg_addr2 == BGEZAL || reg_addr2 == BLTZAL)) || OP == JAL) ? 5'd31 : instr[20:16]; //which part of the instruction word determines the address to write depends on the type of instruction
+    assign reg_addrw = (OP == R) ? instr[15:11] : ((OP==B0 && (reg_addr2 == BGEZAL || reg_addr2 == BLTZAL)) || OP == JAL) ? 5'd31 : instr[20:16]; 
 
     assign write_enable = 
     ((OP == R 
@@ -197,34 +184,24 @@ module mips_cpu_harvard(
     || (OP == B0 
         && (reg_addr2 == BGEZAL || reg_addr2 == BLTZAL))) ? 1 : 0; // these are all the occasions in which a register from the register file will have to be written 
 
-// register file reading 
+
     assign shamt = instr[10:6];
     assign op_1 = (OP == R && shift && !shift_op2) ? {27'b0, shamt} : reg_file[reg_addr1]; 
     assign op_2 = (OP==R || OP==BEQ || OP==BNE || OP == SW || OP == SH || OP == SB || OP == LW || OP == LHU || OP == LH || OP == LBU || OP == LB || OP == LWL || OP == LWR) ? reg_file[reg_addr2] :  (OP == XORI || OP == ORI || OP == ANDI) ? {16'b0, astart} : {{16{astart[15]}}, astart};  
-    
-
-    
 
     assign MSB = op_1[31];
 
     assign register_v0 = reg_file[2]; 
-   // assign reg_t1 = reg_file[9];  //DEBUGGING
-   // assign reg_t0 = reg_file[8];   // DEBUGGING
 
 
 
-
-
-
-// full load/store instructions
-
- // this has to be added to make sure this two bits are paralised during reset (since there can't be anything coming out of RAM)
+//MEMORY_INTERFACE_CONTROLS
 always_comb begin 
     stall = (((OP == SB) || (OP == SH)) && !stall_prev) ? 1:0;
     
     data_read = reset ? 0 : ( ( (OP ==  LW) || ( (OP == SH || OP == SB )  && (stall  == 1) ) || (OP == LB) || (OP == LBU) || (OP == LWL) || (OP == LWR) || (OP == LH) || (OP == LHU) ) ? 1  :0 );
 
-    data_write = reset ? 0: ((OP == SW || OP == SB || OP == SH) && !stall) ? 1: 0; // not sure if I can do this 
+    data_write = reset ? 0: ((OP == SW || OP == SB || OP == SH) && !stall) ? 1: 0; 
 end  
     
 always_ff @(posedge clk) begin 
@@ -233,22 +210,7 @@ end
 
 
 
-
-// idk if these are needed 
-// save the previous reset for the initialisation of instr_address
-    always_ff@(negedge clk) begin 
-        reset_prev <= reset;
-    end 
-
-    always_ff @(posedge clk) begin 
-        active <= next_active; 
-    end // this means that probably some of the asserts will be wrong 
-
-/**/
-
-//instantiate the ALU
-
-//ops 
+//REG_WRITE_SELECTION
     always_comb begin
         case(OP)
         JAL: reg_write = instr_address+4; 
@@ -271,7 +233,7 @@ end
                 reg_write = LO_reg; 
             end
             else begin 
-                reg_write = out; //this will set it to out even when it's doing Multiplication or division but it should be fine because the write enable shouldn't be one (even though it0s not very elegant, see what to do about this)
+                reg_write = out; 
             end 
         end 
         default: begin
@@ -282,15 +244,15 @@ end
                 data_writedata = data; 
             end 
             else begin 
-                reg_write = out; //this heavily relies on the write enable being correct, should really address this in testing 
+                reg_write = out; //this heavily relies on write_enable to be correct
             end 
         end
         endcase 
     end 
 
-//HI/LO
+//HI_REG and LO_REG
 always_ff @(posedge clk) begin 
-    if(OP == R && (funct == MULT || funct == MULTU || funct == DIV || funct == DIVU)) begin // to this I will need to add the other hi and lo instructions (MFLO; MTLO and so on)
+    if(OP == R && (funct == MULT || funct == MULTU || funct == DIV || funct == DIVU)) begin 
         HI_reg <= HI; 
         LO_reg <= LO; 
     end 
@@ -304,20 +266,17 @@ end
 
 
 
+// PC_BLOCK
 
-//save the register address as it will change as soon as the next instruction is brought up 
-
-   assign offset = $signed(astart)*4;
+    assign offset = $signed(astart)*4;
     assign sign_ext_offset = {{15{offset[17]}}, offset}; 
     assign sign_ext_address = {1'b0, instr_address};
 
-// PC counter  
-// note i don't think that we need to update PC next on the negedge (it should be fine anyway)
-    always_comb begin 
 
-// reset vector                         Note: I'm assuming PC won't be reset to 0 but to the reset vector directly, check if this is right
+    always_comb begin 
+                      
         if (reset) begin 
-            PC_next = 32'hBFC00000;
+            PC_next = 32'hBFC00000; //reset address
             jump = 0; 
         end 
         else if (stall) begin 
@@ -329,9 +288,9 @@ end
                 jump = 0; 
             end 
         end 
-        jump_to = (OP == R && ( funct == JR || funct == JALR)) ? op_1 : {PC_upper, target, 2'b00};
-        branch_to = sign_ext_address + sign_ext_offset +4; 
-        jump =  ((R_type && (funct == JR || funct == JALR)) 
+        jump_to = (OP == R && ( funct == JR || funct == JALR)) ? op_1 : {PC_upper, target, 2'b00}; //address it needs to go to in case of a jump
+        branch_to = sign_ext_address + sign_ext_offset +4;  //address it needs to go to in case of a jump and of met conditions 
+        jump =  ((R_type && (funct == JR || funct == JALR))  // controls the jump, will instruct the PC to jump after the branch delay slot instruction is executed
                 || J_type 
                 || (OP == B0 && 
                     (((reg_addr2 == BGEZ || reg_addr2 == BGEZAL) && !MSB) 
@@ -343,72 +302,45 @@ end
 
     end 
     
-    
 
-
-
-//sequential block to actually change the PC address (since instruction fetching is combinatorial the new address must be defined only when we actually want the new instruction ie at the beginning of a new cycle)
     always_ff @(posedge clk) begin 
-         destination <= stall ? destination : (J_type || (R_type && (funct == JALR || funct == JR))) ? jump_to : branch_to[31:0]; // CHANGE
-        jump_now <= jump; 
+        destination <= stall ? destination : (J_type || (R_type && (funct == JALR || funct == JR))) ? jump_to : branch_to[31:0];
+        jump_now <= jump; //to enable the execution of instruction in the branch delay slot 
         if (jump_now && !stall && !reset) begin 
             instr_address <= destination; 
         end 
         else begin 
-           instr_address <= (reset || stall ) ? PC_next : instr_address_next; 
+           instr_address <= (reset || stall ) ? PC_next : instr_address_next; //this ensures that, if reset is not kept high for a whole cycle, reset effectively has no effect
         end
     end 
 
-    /* begin 
-                if (reset == 0) begin
-                    PC <= PC_next; 
-                end 
-                else begin 
-                    PC <= 0; 
-                end 
-            end 
-    */   
-     // this is in case PC needs to be 0 when reset is high
-    
 
 
-//active control 
-    always_comb begin
-        next_active = reset ? 1: (instr_address == 0) ? 0: active;  // even though active should be high during reset we need to make sure that it only activates if reset is high for more than a cycle, see how to do that 
+//ACTIVE_RESET_CONTROL
+    always_ff@(posedge clk) begin 
+        reset_prev <= reset;
+    end 
+
+    always_ff @(posedge clk) begin 
+        active <= reset ? 1 : (instr_address == 0) ? 0 : active; 
     end 
 
 
-// in case active needs to be 0 during reset: 
- /*   if (reset) begin 
-            next_active = 1; 
-        end 
-        else if (PC != 0) begin 
-            next_active = active; 
-        end 
-        else begin 
-            next_active = 0; 
-        end */
-
-
-
-//register file writing
-// what is relevant here is what reg_write is (defined in the logic block)
+//REG_FILE WRITING 
 
     always_ff @(posedge clk)  begin
-        //add clock enable statement 
-        // add a condition so that, if reset is 1, reg_write is 0
-        if (reset && clock_enable) begin  // same here, the fact that it needs to be high for a whole cycle must be enforced 
+        
+        if (reset) begin //set everything to 0
             int i; 
             for (i=0; i<32; i= i+1) begin 
                 reg_file[i] <= 0; 
             end 
         end 
         
-        if (write_enable && clock_enable) begin 
+        else if (write_enable && clock_enable) begin 
             reg_file[reg_addrw] <= reg_write; 
         end 
      
-        // for the above example try reg_file[reg_addrw] = reg_file
         
     end 
     alu ALU(

@@ -23,6 +23,7 @@ module CPU_tb(
 
     //parameter RAM_INIT_FILE = "test/01-binary/countdown.hex";
     parameter ROM_INIT_FILE = "";
+    
 
 
     
@@ -64,15 +65,19 @@ module CPU_tb(
         $display("CPU started");
 
 
-        repeat (20) begin
+        repeat (500) begin 
             @(posedge clk)
-            $display("REG_V0 =  %h", register_v0);
-            
-        end 
+            if (active == 0) begin 
+                $display("RESULT = %h", register_v0); 
+                $finish; 
+            end
+            else begin 
+            end 
+       
+            end
+        $fatal;
 
-        
-        
-        $display("RESULT =  %h", register_v0);
+    
 
     end
 
@@ -82,7 +87,7 @@ module CPU_tb(
     );
 
 
-    RAM_module  ramx(
+    RAM_module ramx(
     .addr(data_address), 
     .data_in(data_writedata),
     .data_read(data_read),
