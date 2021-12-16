@@ -333,8 +333,8 @@ end
         jump =  ((R_type && (funct == JR || funct == JALR)) 
                 || J_type 
                 || (OP == B0 && 
-                        ((reg_addr2 == BGEZ || reg_addr2 == BGEZAL) && !MSB) 
-                        || ((reg_addr2 == BLTZ || reg_addr2 == BLTZAL) && MSB)) 
+                    (((reg_addr2 == BGEZ || reg_addr2 == BGEZAL) && !MSB) 
+                     || ((reg_addr2 == BLTZ || reg_addr2 == BLTZAL) && MSB)))
                 || ((OP == BEQ) && (op_1 == op_2))
                 || ((OP == BGTZ) && (op_1 > 0))  
                 || ((OP == BNE) && (op_1 != op_2)) 
