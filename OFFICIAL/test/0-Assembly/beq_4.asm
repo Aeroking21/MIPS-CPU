@@ -1,0 +1,7 @@
+sll $0 $0 0x0
+addiu s1 $0 0x4
+addiu s0 s0 0x1
+bne s0 s1 0xfffa
+addiu v0 v0 0x1
+jr $0
+sll $0 $0 0x0
