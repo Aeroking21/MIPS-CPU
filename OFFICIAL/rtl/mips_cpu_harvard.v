@@ -344,10 +344,10 @@ end
      
         
     end 
-    alu ALU(
+    mips_cpu_alu ALU(
         .op1(op_1), .op2(op_2), .alu_control(ALU_code), .low(LO), .high(HI), .out(out)
     );
-    loadstore ls (
+    mips_cpu_loadstore ls (
         .OP(OP), .op_1(op_1), .astart(astart), .data_address(data_address), .read_data(data_readdata), .op_2(op_2), .clk(clk), .stall(stall), .data(data)
     );
 endmodule

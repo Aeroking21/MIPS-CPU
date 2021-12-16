@@ -1,4 +1,4 @@
-module loadstore (
+module mips_cpu_loadstore (
     input [31:0] op_1,
     input [15:0] astart,
     //input [31:0] data_address, //guarda in che formato è e che informazioni contiene
