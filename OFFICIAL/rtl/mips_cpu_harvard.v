@@ -38,7 +38,8 @@ module mips_cpu_harvard(
     logic stall, stall_prev, jump, jump_now;
     logic [32:0] branch_to, sign_ext_offset, sign_ext_address;
     logic msb_offset;
-    logic[17:0]offset; 
+    logic[17:0]offset;
+    logic[4:0]shamt;
     
     
     
