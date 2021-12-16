@@ -1,4 +1,4 @@
-lui s0 0x4000
+addiu $0 s0 0x4000
 addiu s1 s1 0x4000
 addiu s2 s2 0x8
 srav s0 s0 s2
