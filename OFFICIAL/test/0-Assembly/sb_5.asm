@@ -2,7 +2,7 @@ addiu t0 $0 0x2301
 addiu t1 $0 0x2323
 addiu t3 $0 0x2345
 addiu t4 $0 0x2367
-addiu $0 s0 0x0522
+addiu s0 s0 0x0320
 sb t0 0x000C(s0)
 sb t1 0x000D(s0)
 sb t3 0x000E(s0)
