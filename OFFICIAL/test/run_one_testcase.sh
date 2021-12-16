@@ -20,6 +20,7 @@ for i in $TestCases; do
         iverilog -g 2012 \
         -s CPU_tb \
         -P CPU_tb.ROM_INIT_FILE=\"test/1-binary/${TESTNAME}_instructions.mem\" \
+        #-P CPU_tb.RAM_INIT_FILE=\"test/5-data/${TESTNAME}_data.mem\" \
         -o test/2-simulator/CPU_tb_${TESTNAME} test/CPU_tb.v test/ROM.v ${1}/mips_cpu_harvard.v ${1}/alu.v ${1}/loadstore.v ${1}/RAM.v
 
 
