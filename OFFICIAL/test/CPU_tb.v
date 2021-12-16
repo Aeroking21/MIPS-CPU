@@ -87,7 +87,11 @@ module CPU_tb(
     );
 
 
+<<<<<<< Updated upstream
     RAM_module ramx(
+=======
+    RAM_module  #(RAM_INIT_FILE) ramx(
+>>>>>>> Stashed changes
     .addr(data_address), 
     .data_in(data_writedata),
     .data_read(data_read),

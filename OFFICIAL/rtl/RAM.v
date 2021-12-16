@@ -13,8 +13,12 @@ output logic[31:0]data_out
 reg [7:0] RAM [0:1000];
 reg [7:0] RAM_big [2938109952: 2938109952+100]; //af200000
 logic [7:0] byte0_in, byte1_in, byte2_in, byte3_in;
+<<<<<<< Updated upstream
 
 //parameter RAM_INIT_FILE = "";
+=======
+parameter RAM_INIT_FILE = "";
+>>>>>>> Stashed changes
 
 assign byte0_in = data_in[7:0];
 assign byte1_in = data_in[15:8];
