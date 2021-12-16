@@ -213,7 +213,7 @@ end
 //REG_WRITE_SELECTION
     always_comb begin
         case(OP)
-        JAL: reg_write = instr_address+4; 
+        JAL: reg_write = instr_address_next+4; 
         B0: begin 
             if (reg_addr2 == BGEZAL || reg_addr2 == BLTZAL) begin 
                 reg_write = instr_address_next +4;
