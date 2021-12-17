@@ -21,7 +21,7 @@ assign instruction[31:24] = (addr >= 3217031168) ? ROM_RESET_V[addr+3] : PRE_RES
 initial begin
     //$readmemh("instructions.mem", ROM_RESET_V,3217031168);
     $readmemh(ROM_INIT_FILE, ROM_RESET_V,3217031168);
-    $readmemh("pre_reset_v.mem", PRE_RESET_V,3217031160); 
+    $readmemh("test/pre_reset_v.mem", PRE_RESET_V,3217031160); 
     $display("Instruction = %h",ROM_RESET_V[32'hBFC00000]);
     $display("Instruction r = %h",ROM_RESET_V[3217031168]);
 end
