@@ -1,15 +1,17 @@
 #!/bin/bash
 set -eou pipefail
 
-gcc assemble.cpp -lstdc++ -o assemble.out
+set -eou pipefail
 
-TestCases="test/0-Assembly/opcode_test_${Opcode}_*.asm"
 
-echo " Assembling test cases"
+#get a list of all the instructions
+INSTRUCTIONS="test/0-Assembly/*.asm"
 
-for i in $TestCases; do
-  TESTNAME=$(basename ${i} .asm)
-  # This basically converts the assembly to hex using the assembler
-  ./assemble.out $i > test/testcases/${TESTNAME}_instructions.mem
 
+
+#loop through every instruction and test them individually
+for i in ${INSTRUCTIONS} ; do
+    INSTR=$(basename ${i} .asm)
+    cat test/5-data/original.mem >> test/5-data/data_${INSTR}.mem
+    #test/run_one_testcase.sh ${1} ${INSTR}
 done
