@@ -1,3 +1,3 @@
 addiu s1 s1 0x1
 jr $0
-sll s1 v0 0x4
+sll v0 s1 0x4
