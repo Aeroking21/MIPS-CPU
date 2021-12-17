@@ -10,7 +10,7 @@ output logic[31:0]data_out
 
 
 // RAM
-reg [7:0] RAM [0:1000];
+reg [7:0] RAM [0:1500];
 reg [7:0] RAM_big [2938109952: 2938109952+100]; //af200000
 logic [7:0] byte0_in, byte1_in, byte2_in, byte3_in;
 
