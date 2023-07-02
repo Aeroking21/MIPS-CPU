@@ -2,7 +2,7 @@
 
 
 ## How to compile 
-1. Go to the OFFICIAL directory
+1. Go to the directory
 2. Compile the assembler with `gcc assemble.cpp -lstdc++ -o assemble.out` (If it says permission denied run `chmod u+x assemble.cpp`)
 3. Change the content of the `test.asm` file to the assembly code you want to test (Check below for format/syntax)
 4. Assemble the instructions with `./assemble.out test.asm > instructions.mem`
